@@ -1,0 +1,37 @@
+.nav-label{
+  color: #502cb7;
+  margin: 4px;
+}
+
+.login-button{
+  background-color: #502cb7;
+  color: white;
+}
+.login-button:hover{
+  color: #502cb7;
+  border: none;
+}
+
+.hero-section{
+  display: flex;
+  padding: 100px 32px;
+}
+
+.hero-section-label{
+  color: #502cb7;
+    font-family: 'Helvetica_Regular' ;
+    font-size: 62px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -1.24px;
+}
+.hero-section-label-two{
+  color: #000;
+  font-family: 'Inter';
+  font-size: 20px;
+}
+.Login3-rightSection{
+  background: linear-gradient(to right, rgb(80,44,183) 0%,rgb(40, 22, 91) 100%);
+  color: white;
+}
