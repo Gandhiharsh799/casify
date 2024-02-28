@@ -17,7 +17,7 @@ export default function Landing() {
             </p>
             <div className="pt-4">
               <Link to="login">
-                <button className="btn  btn-lg login-button">
+                <button className="btn btn-lg login-button">
                   Get Started{" "}
                   <span>
                     <FontAwesomeIcon icon={faArrowRight} />
