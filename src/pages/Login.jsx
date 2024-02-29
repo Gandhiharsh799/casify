@@ -1,5 +1,4 @@
-import { Paper } from "@mui/material";
-import { TextField } from "@mui/material";
+
 import Button from "@mui/material/Button";
 import '../index.css'
 import { Link } from "react-router-dom";
@@ -7,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Login() {
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="row bg-white shadow box-area">
+      <div className="row bg-white shadow-lg box-area">
         <div className="col-md-6 p-3 d-flex justify-content-center rounded-start-4 flex-column align-items-center left-box">
           <div className="text-center">
             <h1 className="text-white fs-1">Welcome to Casify!</h1>
@@ -15,7 +14,7 @@ export default function Login() {
           </div>
         </div>
 
-        <Paper elevation={3} className="col-md-6 rounded-end-4 right-box">
+        <div className="col-md-6 rounded-end-4 border right-box">
           <div className="row align-items-center">
             <p
               className="text-center p-2  my-4 nav-label"
@@ -24,51 +23,61 @@ export default function Login() {
               Casify
             </p>
           </div>
-          <div className="input-group mb-3 justify-content-center">
-            <TextField
-              type="email"
-              label="E-mail"
-              variant="outlined"
-              required
-            />
-          </div>
-          <div className="input-group mb-3 justify-content-center">
-            <TextField
-              type="password"
-              label="Password"
-              variant="outlined"
-              required
-            />
-          </div>
-          <div className="input-group mb-5 justify-content-center">
-            <Link to= "/report">
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#502cb7",
-                textTransform: "capitalize",
-                width: "25%",
-                height: "40px",
-                "&:hover": {
-                  backgroundColor: "white",
-                  color: "#502cb7",
-                },
-              }}
-              className="btn btn-lg rounded-pill"
-              >
-              Login
-            </Button>
+          <form>
+            
+              <div className=" inp form-floating form-group mx-5 mb-4">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="floatingInputGroup1"
+                  placeholder="Email"
+                  required
+                />
+                <label htmlFor="floatingInputGroup1">Email</label>
+              </div>
+            
+            
+              <div className="inp form-floating mx-5 mb-4">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="floatingInputGroup1"
+                  placeholder="Password"
+                  required
+                />
+                <label htmlFor="floatingInputGroup1">Password</label>
+              </div>
+            
+            <div className="input-group mb-5 justify-content-center">
+              <Link to="/report">
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#502cb7",
+                    textTransform: "capitalize",
+                    
+                    height: "40px",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#502cb7",
+                    },
+                  }}
+                  className="btn btn-lg rounded-pill"
+                >
+                  Login
+                </Button>
               </Link>
-          </div>
+            </div>
+          </form>
           <div className="row">
             <p className="text-center mt-5">Don't have an account?</p>
-            <Link to="/">
+            <Link to="/signup">
               <p className="text-center mb-4" style={{ color: "#502cb7" }}>
                 Create an account
               </p>
             </Link>
           </div>
-        </Paper>
+        </div>
       </div>
     </div>
   );
