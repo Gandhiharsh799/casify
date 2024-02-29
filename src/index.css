@@ -37,7 +37,7 @@
 }
 
 .box-area {
-  width: 1160px;
+  width: 1260px;
 }
 
 .left-box {
@@ -54,20 +54,15 @@
 .back{
   background-color: #502cb7;
 }
-.search-bar{
-  
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 5px 10px;
-}
-.search-bar input {
-  border: none;
+
+.inp input:focus{
+  border: 2px solid #502cb7;
   outline: none;
-  flex-grow: 1;
-  font-size: 16px;
 }
 
-.search-bar span {
-  font-size: 18px;
-  color: #999;
+.inp label{
+  color: #6e6e6e;
+}
+.search{
+  border: 2px solid #502cb7
 }

@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import ReportLayout from './pages/Report'
 import Dashboard from './components/Dashboard'
 import Cases from './components/Cases'
+import Register from './pages/Register'
 
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "login",
     element: <Login />,
+  },
+  {
+    path: 'signup',
+    element: <Register/>
   },
   {
     path: "report",
