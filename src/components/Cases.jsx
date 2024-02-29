@@ -2,6 +2,9 @@ import { faBriefcase } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { Select, MenuItem, InputLabel ,FormControl } from "@mui/material";
+
 
 export default function Cases() {
   return (
@@ -23,7 +26,7 @@ export default function Cases() {
             <FontAwesomeIcon icon={faPlus} className="px-1" />
             Add Case
           </button>
-          <div className="search-bar d-flex align-items-center rounded-pill">
+          <div className="search d-flex align-items-center rounded-pill px-4 my-3 me-3">
             <span className="input-group-append">
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
@@ -34,10 +37,55 @@ export default function Cases() {
               type="text"
               placeholder="Search..."
               name="search"
-              style={{ borderColor: "#502cb7" }}
-              className="p-2 "
+              style={{ border: "none", outline: "none", flexGrow: "1" }}
+              className="px-2"
             />
           </div>
+        </div>
+      </div>
+
+      <div className="d-flex flex-row justify-content-start align-items-center">
+        <div className="d-flex flex-row mt-4">
+          <p className=" ms-3 fs-5 fw-bold">Filters</p>
+          <FontAwesomeIcon icon={faChevronRight} className="mt-2 ms-2" />
+          <FontAwesomeIcon icon={faChevronRight} className="mt-2" />
+        </div>
+
+        <div className="d-flex flex-row mx-3 ">
+          <FormControl variant="standard" sx={{ minWidth: 150 }} className="ms-2">
+            <InputLabel>Case Category</InputLabel>
+            <Select label="Age">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl variant="standard" sx={{ minWidth: 150 }} className="ms-3">
+            <InputLabel>Case Stage</InputLabel>
+            <Select label="Age">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className="ms-3" variant="standard" sx={{ minWidth: 150 }}>
+            <InputLabel>Case Status</InputLabel>
+            <Select label="Age">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+            
+          </FormControl>
         </div>
       </div>
     </div>
