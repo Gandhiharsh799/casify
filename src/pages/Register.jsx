@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+
 import "../index.css";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,7 @@ export default function Register() {
       <div className="row bg-white shadow-lg box-area">
         <div className="col-md-6 p-3 d-flex justify-content-center rounded-start-4 flex-column align-items-center left-box">
           <div className="text-center">
-            <h1 className="text-white fs-1">Welcome to Casify!</h1>
+            <h1 className="text-white fs-1 fw-bold">Welcome to Casify!</h1>
             <p className="text-white">Manage your details here</p>
           </div>
         </div>
@@ -101,23 +101,13 @@ export default function Register() {
             </div>
 
             <div className="input-group mb-5 justify-content-center">
-              <Link to="/report">
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#502cb7",
-                    textTransform: "capitalize",
-
-                    height: "40px",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      color: "#502cb7",
-                    },
-                  }}
-                  className="btn btn-lg rounded-pill"
+              <Link to="/login">
+                <button
+                  className="btn btn-lg rounded-pill m-3 fs-6"
+                  style={{ backgroundColor: "#502cb7", color: "white" }}
                 >
-                  Register
-                </Button>
+                  Sign up
+                </button>
               </Link>
             </div>
           </form>

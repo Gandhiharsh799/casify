@@ -1,14 +1,25 @@
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons"
+import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { Select, MenuItem, InputLabel ,FormControl } from "@mui/material";
-
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import CaseList from "./CaseList";
+import Heading from "../UI/Heading";
+import { useRef } from "react";
+import Modal from "../UI/Modal";
 
 export default function Cases() {
+  const dialog = useRef();
+
+  const handleModal = () => {
+    dialog.current.showModal();
+  };
+
   return (
     <div>
+      
+        <Modal ref={dialog} />
       <div className="d-flex flex-row justify-content-between">
         <div className="d-flex">
           <FontAwesomeIcon
@@ -22,6 +33,7 @@ export default function Cases() {
           <button
             className="btn btn-lg rounded-pill m-3 fs-6"
             style={{ backgroundColor: "#502cb7", color: "white" }}
+            onClick={handleModal}
           >
             <FontAwesomeIcon icon={faPlus} className="px-1" />
             Add Case
@@ -45,16 +57,20 @@ export default function Cases() {
       </div>
 
       <div className="d-flex flex-row justify-content-start align-items-center">
-        <div className="d-flex flex-row mt-4">
+        <div className="d-flex flex-row mt-3">
           <p className=" ms-3 fs-5 fw-bold">Filters</p>
           <FontAwesomeIcon icon={faChevronRight} className="mt-2 ms-2" />
           <FontAwesomeIcon icon={faChevronRight} className="mt-2" />
         </div>
 
-        <div className="d-flex flex-row mx-3 ">
-          <FormControl variant="standard" sx={{ minWidth: 150 }} className="ms-2">
-            <InputLabel>Case Category</InputLabel>
-            <Select label="Age">
+        <div className="d-flex flex-row mx-3  ">
+          <FormControl
+            variant="standard"
+            sx={{ minWidth: 150 }}
+            className="ms-2"
+          >
+            <InputLabel color="primary">Case Category</InputLabel>
+            <Select color="primary" label="Age">
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -63,7 +79,11 @@ export default function Cases() {
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="standard" sx={{ minWidth: 150 }} className="ms-3">
+          <FormControl
+            variant="standard"
+            sx={{ minWidth: 150 }}
+            className="ms-3"
+          >
             <InputLabel>Case Stage</InputLabel>
             <Select label="Age">
               <MenuItem value="">
@@ -74,7 +94,11 @@ export default function Cases() {
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </FormControl>
-          <FormControl className="ms-3" variant="standard" sx={{ minWidth: 150 }}>
+          <FormControl
+            className="ms-3"
+            variant="standard"
+            sx={{ minWidth: 150 }}
+          >
             <InputLabel>Case Status</InputLabel>
             <Select label="Age">
               <MenuItem value="">
@@ -84,10 +108,21 @@ export default function Cases() {
               <MenuItem value={20}>Twenty</MenuItem>
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
-            
           </FormControl>
+          <div className="d-flex">
+            <button
+              className="btn btn-md rounded-pill m-3 fs-6"
+              style={{ backgroundColor: "#502cb7", color: "white" }}
+            >
+              Clear All
+            </button>
+          </div>
         </div>
       </div>
+
+      <Heading />
+
+      <CaseList />
     </div>
   );
 }

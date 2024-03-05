@@ -51,18 +51,31 @@
 .right-box {
   width: 40%;
 }
-.back{
+.back {
   background-color: #502cb7;
 }
 
-.inp input:focus{
+.inp input:focus {
   border: 2px solid #502cb7;
   outline: none;
 }
 
-.inp label{
+.inp label {
   color: #6e6e6e;
 }
-.search{
-  border: 2px solid #502cb7
+.search {
+  border: 2px solid #502cb7;
 }
+
+.head {
+  background-color: rgb(80, 44, 183);
+  color: white;
+}
+
+.list{
+  cursor: pointer;
+}
+.list:hover{
+  background-color:rgb(220, 239, 247) ;
+}
+

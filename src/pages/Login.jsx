@@ -1,5 +1,4 @@
 
-import Button from "@mui/material/Button";
 import '../index.css'
 import { Link } from "react-router-dom";
 
@@ -24,48 +23,36 @@ export default function Login() {
             </p>
           </div>
           <form>
-            
-              <div className=" inp form-floating form-group mx-5 mb-4">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="floatingInputGroup1"
-                  placeholder="Email"
-                  required
-                />
-                <label htmlFor="floatingInputGroup1">Email</label>
-              </div>
-            
-            
-              <div className="inp form-floating mx-5 mb-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="floatingInputGroup1"
-                  placeholder="Password"
-                  required
-                />
-                <label htmlFor="floatingInputGroup1">Password</label>
-              </div>
-            
+            <div className=" inp form-floating form-group mx-5 mb-4">
+              <input
+                type="email"
+                className="form-control"
+                id="floatingInputGroup1"
+                placeholder="Email"
+                required
+              />
+              <label htmlFor="floatingInputGroup1">Email</label>
+            </div>
+
+            <div className="inp form-floating mx-5 mb-4">
+              <input
+                type="text"
+                className="form-control"
+                id="floatingInputGroup1"
+                placeholder="Password"
+                required
+              />
+              <label htmlFor="floatingInputGroup1">Password</label>
+            </div>
+
             <div className="input-group mb-5 justify-content-center">
               <Link to="/report">
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#502cb7",
-                    textTransform: "capitalize",
-                    
-                    height: "40px",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      color: "#502cb7",
-                    },
-                  }}
-                  className="btn btn-lg rounded-pill"
+                <button
+                  className="btn btn-lg rounded-pill m-3 fs-6"
+                  style={{ backgroundColor: "#502cb7", color: "white" }}
                 >
                   Login
-                </Button>
+                </button>
               </Link>
             </div>
           </form>

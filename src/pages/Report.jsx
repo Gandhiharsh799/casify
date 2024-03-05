@@ -3,7 +3,7 @@ import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "../index.css";
-import { faBars} from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default function ReportLayout() {
   return (
@@ -21,10 +21,12 @@ export default function ReportLayout() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span
-                
-                
-              ><FontAwesomeIcon icon={faBars} style={{color: 'white', height: '25px'}} /></span>
+              <span>
+                <FontAwesomeIcon
+                  icon={faBars}
+                  style={{ color: "white", height: "25px" }}
+                />
+              </span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav pt-3 fs-5">
@@ -115,11 +117,11 @@ export default function ReportLayout() {
           </div>
         </nav>
       </header>
-      <main>
+      <main className="min-vh-75">
         <Outlet />
       </main>
-      <footer className="back">
-        <p className="p-3 text-white">
+      <footer className="back fixed-bottom">
+        <p className="pt-3 px-4 text-white">
           <FontAwesomeIcon icon={faCopyright} className="dropdown " /> 2024 All
           rights reserved - CaseFile 2024 Pvt. Ltd.
         </p>

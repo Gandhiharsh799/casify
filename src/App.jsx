@@ -7,6 +7,15 @@ import ReportLayout from './pages/Report'
 import Dashboard from './components/Dashboard'
 import Cases from './components/Cases'
 import Register from './pages/Register'
+import { createMuiTheme, ThemeProvider } from '@mui/material'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#502cb7'
+    }
+  }
+})
 
 
 const router = createBrowserRouter([
@@ -47,9 +56,10 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <RouterProvider router={router}>
-    </RouterProvider>
-  )
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router}></RouterProvider>
+    </ThemeProvider>
+  );
 }
 
 export default App
