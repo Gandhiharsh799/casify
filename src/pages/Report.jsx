@@ -1,11 +1,24 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "../index.css";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import '../index.css'
+
+
 
 export default function ReportLayout() {
+  const navigate = useNavigate()
+
+  function handleNavigate(){
+    navigate('/login')
+  }
+
+  function handleNavigateUser() {
+    navigate("/report/setting/userprofile");
+  }
   return (
     <>
       <header className="back ">
@@ -69,16 +82,28 @@ export default function ReportLayout() {
                   >
                     Settings
                   </Link>
-                  <ul className="dropdown-menu">
+                  <ul className="dropdown-menu drop">
                     <li>
-                      <a className="dropdown-item" href="#">
-                        Action
-                      </a>
+                      <Link
+                        className="dropdown-item text-white hover fw-bold"
+                        to="/report/setting/userprofile"
+                      >
+                        User Profile
+                      </Link>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
-                        Another action
-                      </a>
+                      <Link
+                        className="dropdown-item text-white hover fw-bold"
+                        href="#"
+                      >
+                        Service Types
+                      </Link>
+                      <Link
+                        className="dropdown-item text-white hover fw-bold"
+                        href="#"
+                      >
+                        Case Types
+                      </Link>
                     </li>
                   </ul>
                 </li>
@@ -100,16 +125,30 @@ export default function ReportLayout() {
                     cursor: "pointer",
                   }}
                 />
-                <ul className="dropdown-menu" style={{ marginLeft: "-120px" }}>
+                <ul
+                  className="dropdown-menu drop"
+                  style={{ marginLeft: "-120px" }}
+                >
                   <li>
-                    <a className="dropdown-item" href="#">
+                    <button
+                      className="dropdown-item text-white hover fw-bold"
+                      onClick={handleNavigate}
+                    >
+                      <FontAwesomeIcon
+                        className="px-2 "
+                        icon={faRightFromBracket}
+                      />
                       Logout
-                    </a>
+                    </button>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#">
-                      Profile
-                    </a>
+                    <button
+                      onClick={handleNavigateUser}
+                      className="dropdown-item text-white hover fw-bold"
+                    >
+                      <FontAwesomeIcon className="px-2 " icon={faUser} />
+                      User Profile
+                    </button>
                   </li>
                 </ul>
               </Link>

@@ -1,68 +1,12 @@
 import "../index.css";
-const dummyCases = [
-  {
-    caseNo: 1,
-    caseName: "Case 2",
-    caseCategory: "Theft",
-    caseStage: "Appeal",
-    cityName: "Gandhinagar",
-    issueDate: "2024-03-05",
-    clientName: "Client 1",
-    lawyerName: "Lawyer 1",
-    status: "Pending",
-  },
-  {
-    caseNo: 1,
-    caseName: "Case 2",
-    caseCategory: "Theft",
-    caseStage: "Appeal",
-    cityName: "Gandhinagar",
-    issueDate: "2024-03-06",
-    clientName: "Client 2",
-    lawyerName: "Lawyer 2",
-    status: "Open",
-  },
-  {
-    caseNo: 1,
-    caseName: "Case 2",
-    caseCategory: "Theft",
-    caseStage: "Appeal",
-    cityName: "Gandhinagar",
-    issueDate: "2024-03-06",
-    clientName: "Client 2",
-    lawyerName: "Lawyer 2",
-    status: "Open",
-  },
-  
-  // Add more dummy cases as needed
-];
+import { useSelector } from "react-redux";
 
 export default function CaseList() {
+
+  const cases = useSelector((state) => state.cases.cases)
   return (
-    // <ul>
-    //   {dummyCases.map((caseItem, index) => (
-    //     <>
 
-    //         <li
-    //           key={index}
-    //           className="d-flex flex-row justify-content-around pt-2"
-    //         >
-    //           <p>{caseItem.caseNo}</p>
-    //           <p>{caseItem.caseName}</p>
-    //           <p className="justify-content-center">{caseItem.caseCategory}</p>
-    //           <p>{caseItem.caseStage}</p>
-    //           <p>{caseItem.cityName}</p>
-    //           <p>{caseItem.issueDate}</p>
-    //           <p>{caseItem.clientName}</p>
-    //           <p>{caseItem.lawyerName}</p>
-    //           <p>{caseItem.status}</p>
-    //         </li>
-
-    //     </>
-    //   ))}
-    // </ul>
-
-    <div className="mt-2">
+    <div>
       <table className="table" cellPadding={12} align="center">
         
           <tr className="head ps-6 text-center">
@@ -78,14 +22,14 @@ export default function CaseList() {
           </tr>
        
         
-          {dummyCases.map((caseItem, index) => (
+          {cases.map((caseItem, index) => (
             <tr key={index} className="text-center border-top list">
               <td>{caseItem.caseNo}</td>
               <td>{caseItem.caseName}</td>
               <td>{caseItem.caseCategory}</td>
-              <td>{caseItem.caseStage}</td>
+              <td>{caseItem.court}</td>
               <td>{caseItem.cityName}</td>
-              <td>{caseItem.issueDate}</td>
+              <td>{caseItem.date}</td>
               <td>{caseItem.clientName}</td>
               <td>{caseItem.lawyerName}</td>
               <td>{caseItem.status}</td>

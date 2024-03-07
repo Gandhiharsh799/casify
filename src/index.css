@@ -31,10 +31,7 @@
   font-family: "Inter";
   font-size: 20px;
 }
-.Login3-rightSection {
-  background: linear-gradient(to right, #502cb7 0%, rgb(40, 22, 91) 100%);
-  color: white;
-}
+
 
 .box-area {
   width: 1260px;
@@ -46,10 +43,10 @@
     rgb(80, 44, 183) 0%,
     rgb(40, 22, 91) 100%
   );
-  width: 60%;
+  width: 65%;
 }
 .right-box {
-  width: 40%;
+  width: 35%;
 }
 .back {
   background-color: #502cb7;
@@ -79,3 +76,13 @@
   background-color:rgb(220, 239, 247) ;
 }
 
+.drop{
+  background-color: rgb(111, 77, 204);
+}
+.hover:hover{
+  background-color: rgb(136, 107, 214);
+}
+
+.user{
+  color: #502cb7;
+}

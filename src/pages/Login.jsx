@@ -1,8 +1,57 @@
-
-import '../index.css'
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import "../index.css";
+import { Link, useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const validationErrors = {};
+
+    if (formData.email.trim() === "") {
+      validationErrors.email = "You must enter an email ";
+    }
+    if (!formData.email.trim().includes("@")) {
+      validationErrors.email = "You must enter a valid email";
+    }
+    if (formData.password.trim() === "") {
+      validationErrors.password = "password is a required field";
+    }
+    if (formData.password.length != 0 && formData.password.length < 6) {
+      validationErrors.password =
+        "Password is too short - should be 6 chars minimum.";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    console.log("login form submitted", formData);
+    dispatch(login());
+    navigate('/report/dashboard')
+
+  };
+
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row bg-white shadow-lg box-area">
@@ -22,38 +71,47 @@ export default function Login() {
               Casify
             </p>
           </div>
-          <form>
-            <div className=" inp form-floating form-group mx-5 mb-4">
-              <input
-                type="email"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder="Email"
-                required
-              />
-              <label htmlFor="floatingInputGroup1">Email</label>
-            </div>
-
-            <div className="inp form-floating mx-5 mb-4">
-              <input
+          <form onSubmit={handleSubmit}>
+            <div className="mt-3 pt-3 d-flex flex-column align-items-center ">
+              <TextField
                 type="text"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder="Password"
-                required
+                className="mb-3"
+                name="email"
+                label="Email"
+                variant="outlined"
+                error={!!errors.email}
+                value={formData.email}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.email}
               />
-              <label htmlFor="floatingInputGroup1">Password</label>
+
+              <TextField
+                type="password"
+                className="mb-3"
+                name="password"
+                label="Password"
+                variant="outlined"
+                error={!!errors.password}
+                value={formData.password}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.password}
+              />
             </div>
 
-            <div className="input-group mb-5 justify-content-center">
-              <Link to="/report">
-                <button
-                  className="btn btn-lg rounded-pill m-3 fs-6"
-                  style={{ backgroundColor: "#502cb7", color: "white" }}
-                >
-                  Login
-                </button>
-              </Link>
+            <div className="mb-5 d-flex justify-content-center">
+              <button
+                type="submit"
+                className="btn btn-lg rounded-pill m-3 fs-6"
+                style={{ backgroundColor: "#502cb7", color: "white" }}
+              >
+                Submit
+              </button>
             </div>
           </form>
           <div className="row">

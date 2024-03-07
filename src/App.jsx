@@ -7,9 +7,13 @@ import ReportLayout from './pages/Report'
 import Dashboard from './components/Dashboard'
 import Cases from './components/Cases'
 import Register from './pages/Register'
-import { createMuiTheme, ThemeProvider } from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
+import Setting from './components/Setting'
+import UserProfile from './components/UserProfile'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: '#502cb7'
@@ -43,11 +47,22 @@ const router = createBrowserRouter([
     children: [
       {
         path: "dashboard",
-        element: <Dashboard/>
+        element :<Dashboard/>
+        
       },
       {
         path: 'cases',
         element: <Cases/>
+      },
+      {
+        path: 'setting',
+        element: <Setting />,
+        children: [
+          {
+            path : 'userprofile',
+            element: <UserProfile />
+          }
+        ]
       }
     ],
   },
@@ -56,9 +71,12 @@ const router = createBrowserRouter([
 function App() {
 
   return (
+    <Provider store={store}>
+
     <ThemeProvider theme={theme}>
       <RouterProvider router={router}></RouterProvider>
     </ThemeProvider>
+    </Provider>
   );
 }
 

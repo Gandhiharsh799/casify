@@ -1,8 +1,38 @@
-
-import "../index.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import "../index.css";
+import { TextField } from "@mui/material";
 
 export default function Register() {
+
+  const [formData, setFormdata] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    mobileNumber: '',
+    companyAddress: '',
+    vatNumber: ''
+
+  })
+
+  const [errors, setErrors] = useState({})
+
+    function handleInputChange(event){
+      const {name, value} = event.target
+      setFormdata({
+        ...formData,
+        [name]: value
+      })
+    }
+
+    function handleSubmit(event){
+      event.preventDefault();
+
+      const validationErrors = {};
+
+    }
+
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row bg-white shadow-lg box-area">
@@ -22,101 +52,137 @@ export default function Register() {
               Casify
             </p>
           </div>
-          <form>
-            <div className=" inp form-floating form-group mx-5 mb-2">
-              <input
+          <form onSubmit={handleSubmit}>
+            <div className="d-flex flex-column align-items-center">
+              <TextField
                 type="text"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder="Name"
-                required
+                className="mb-2"
+                name="name"
+                label="Name"
+                variant="outlined"
+                error={!!errors.name}
+                value={formData.name}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.name}
               />
-              <label htmlFor="floatingInputGroup1">Name</label>
-            </div>
-
-            <div className="inp form-floating mx-5 mb-2">
-              <input
+              <TextField
                 type="email"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder="Email"
-                required
+                className="mb-2"
+                name="email"
+                label="Email"
+                variant="outlined"
+                error={!!errors.email}
+                value={formData.email}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.email}
               />
-              <label htmlFor="floatingInputGroup1">E-mail</label>
-            </div>
-
-            <div className="inp form-floating mx-5 mb-2">
-              <input
+              <TextField
                 type="password"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder="Password"
-                required
+                className="mb-2"
+                name="password"
+                label="Password"
+                variant="outlined"
+                error={!!errors.password}
+                value={formData.password}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.password}
               />
-              <label htmlFor="floatingInputGroup1">Password</label>
-            </div>
-
-            <div className="inp form-floating mx-5 mb-2">
-              <input
+              <TextField
                 type="password"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder="Password"
-                required
+                className="mb-2"
+                name="confirmPassword"
+                label="Confirm Password"
+                variant="outlined"
+                error={!!errors.confirmPassword}
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.confirmPassword}
               />
-              <label htmlFor="floatingInputGroup1">Confirm Password</label>
-            </div>
-
-            <div className="inp form-floating mx-5 mb-2">
-              <input
+              <TextField
                 type="number"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder="Mobile Number"
-                required
+                className="mb-2"
+                name="mobileNumber"
+                label="Mobile Number"
+                variant="outlined"
+                error={!!errors.mobileNumber}
+                value={formData.mobileNumber}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.mobileNumber}
               />
-              <label htmlFor="floatingInputGroup1">Mobile Number</label>
-            </div>
-
-            <div className="inp form-floating mx-5 mb-2">
-              <input
+              <TextField
                 type="text"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder=""
-                required
+                className="mb-2"
+                name="companyAddress"
+                label="Company Address"
+                variant="outlined"
+                error={!!errors.companyAddress}
+                value={formData.companyAddress}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.companyAddress}
               />
-              <label htmlFor="floatingInputGroup1">Company Address</label>
-            </div>
-
-            <div className="inp form-floating mx-5 mb-4">
-              <input
+              <TextField
                 type="text"
-                className="form-control"
-                id="floatingInputGroup1"
-                placeholder=""
-                required
+                className="mb-2"
+                name="companyAddress"
+                label="Company Address"
+                variant="outlined"
+                error={!!errors.companyAddress}
+                value={formData.companyAddress}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.companyAddress}
               />
-              <label htmlFor="floatingInputGroup1">TAX number</label>
+              <TextField
+                type="text"
+                className="mb-2"
+                name="vatNumber"
+                label="Vat Number"
+                variant="outlined"
+                error={!!errors.vatNumber}
+                value={formData.vatNumber}
+                onChange={handleInputChange}
+                sx={{
+                  width: "70%",
+                }}
+                helperText={errors.vatNumber}
+              />
             </div>
-
-            <div className="input-group mb-5 justify-content-center">
-              <Link to="/login">
-                <button
-                  className="btn btn-lg rounded-pill m-3 fs-6"
-                  style={{ backgroundColor: "#502cb7", color: "white" }}
-                >
-                  Sign up
-                </button>
-              </Link>
+            <div className="input-group mb-4 justify-content-center">
+              <button
+                type="submit"
+                className="btn btn-lg rounded-pill m-3 fs-6"
+                style={{ backgroundColor: "#502cb7", color: "white" }}
+              >
+                Sign up
+              </button>
             </div>
           </form>
-          <div className="row">
-            <p className="text-center mt-5">Do you have an account?</p>
+          <div className="d-flex flex-column align-items-center">
+            <small className="text-center mt-4">Already have an account?</small>
             <Link to="/login">
-              <p className="text-center mb-4" style={{ color: "#502cb7" }}>
+              <small className="m-3" style={{ color: "#502cb7" }}>
                 Sign in
-              </p>
+              </small>
             </Link>
           </div>
         </div>

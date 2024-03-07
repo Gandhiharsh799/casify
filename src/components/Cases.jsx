@@ -18,8 +18,7 @@ export default function Cases() {
 
   return (
     <div>
-      
-        <Modal ref={dialog} />
+      <Modal ref={dialog} />
       <div className="d-flex flex-row justify-content-between">
         <div className="d-flex">
           <FontAwesomeIcon
@@ -69,14 +68,10 @@ export default function Cases() {
             sx={{ minWidth: 150 }}
             className="ms-2"
           >
-            <InputLabel color="primary">Case Category</InputLabel>
+            <InputLabel>Case Category</InputLabel>
             <Select color="primary" label="Age">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value="Theft">Theft</MenuItem>
+              <MenuItem value="Crime">Crime</MenuItem>
             </Select>
           </FormControl>
           <FormControl
@@ -85,13 +80,10 @@ export default function Cases() {
             className="ms-3"
           >
             <InputLabel>Case Stage</InputLabel>
-            <Select label="Age">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+            <Select label="Case Stage">
+              <MenuItem value="First Degree">First Degree</MenuItem>
+              <MenuItem value="Appeal">Appeal</MenuItem>
+              <MenuItem value="Supreme">Supreme</MenuItem>
             </Select>
           </FormControl>
           <FormControl
@@ -101,12 +93,8 @@ export default function Cases() {
           >
             <InputLabel>Case Status</InputLabel>
             <Select label="Age">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value="Open">Open</MenuItem>
+              <MenuItem value="Close">Close</MenuItem>
             </Select>
           </FormControl>
           <div className="d-flex">
