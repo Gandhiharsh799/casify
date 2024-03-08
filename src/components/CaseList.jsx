@@ -2,8 +2,7 @@ import "../index.css";
 import { useSelector } from "react-redux";
 
 export default function CaseList() {
-
-  const cases = useSelector((state) => state.cases.cases)
+  const cases = useSelector((state) => state.cases.cases);
   return (
     <div>
       <table className="table" cellPadding={12} align="center">

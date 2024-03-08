@@ -116,3 +116,6 @@
   border-radius: 10px;
   color: #2c42b7;
 }
+.no-placeholder input::placeholder {
+  opacity: 0; /* Hide the placeholder text */
+}

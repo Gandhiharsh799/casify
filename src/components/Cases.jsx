@@ -12,22 +12,16 @@ import {
   TextField,
 } from "@mui/material";
 import CaseList from "./CaseList";
-import Heading from "../UI/Heading";
+
 import { useRef } from "react";
 import Modal from "../UI/Modal";
 
 export default function Cases() {
   const dialog = useRef();
-  
 
   const handleModal = () => {
-
     dialog.current.showModal();
   };
-
-
-  
-
 
   return (
     <div>
@@ -132,7 +126,7 @@ export default function Cases() {
         </div>
       </div>
 
-      <Heading />
+   
 
       <CaseList />
     </div>

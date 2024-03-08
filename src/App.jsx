@@ -13,6 +13,7 @@ import { store } from './store/store'
 import Setting from './components/Setting'
 import UserProfile from './components/UserProfile'
 import Services from './components/Services'
+import ServiceDetails from './components/ServiceDetails'
 
 const theme = createTheme({
   palette: {
@@ -60,7 +61,13 @@ const router = createBrowserRouter([
       },
       {
         path: 'services',
-        element: <Services/>
+        element: <Services/>,
+        children:[
+          {
+            path: 'report/services/:id',
+            element: <ServiceDetails />
+          },
+        ],
       },
       {
         path: 'setting',
