@@ -1,9 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../index.css";
 import { TextField } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../store/userProfileSlice";
 
 export default function Register() {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [formData, setFormdata] = useState({
     name: '',
@@ -31,6 +36,44 @@ export default function Register() {
 
       const validationErrors = {};
 
+      if (formData.name.trim() === "") {
+        validationErrors.name = "Name is required";
+      }
+
+      if (formData.email.trim() === "") {
+        validationErrors.email = "You must enter an email ";
+      }
+      if (!formData.email.trim().includes("@")) {
+        validationErrors.email = "You must enter a valid email";
+      }
+      if (formData.password.trim() === "") {
+        validationErrors.password = "Password is required"
+      }
+      else if (formData.password.length < 6) {
+        validationErrors.password =
+          "Password is too short - should be 6 chars minimum.";
+      }
+      if (formData.confirmPassword.trim() === "") {
+        validationErrors.confirmPassword = "confirm password is required";
+      }
+      else if (formData.confirmPassword !== formData.password) {
+        validationErrors.confirmPassword =
+          "Passwords must match";
+      }
+      if (formData.mobileNumber.trim() === "") {
+        validationErrors.mobileNumber = "You must enter a mobile number";
+      } else if (formData.mobileNumber.length < 10) {
+        validationErrors.mobileNumber =
+          "Number is too short - should be 10 chars.";
+      }
+
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        return;
+      }
+      console.log("signup form submitted", formData);
+      dispatch(setUserData(formData))
+      navigate("/login");
     }
 
   return (
@@ -123,20 +166,6 @@ export default function Register() {
                   width: "70%",
                 }}
                 helperText={errors.mobileNumber}
-              />
-              <TextField
-                type="text"
-                className="mb-2"
-                name="companyAddress"
-                label="Company Address"
-                variant="outlined"
-                error={!!errors.companyAddress}
-                value={formData.companyAddress}
-                onChange={handleInputChange}
-                sx={{
-                  width: "70%",
-                }}
-                helperText={errors.companyAddress}
               />
               <TextField
                 type="text"

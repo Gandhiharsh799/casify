@@ -3,7 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  TextField,
+} from "@mui/material";
 import CaseList from "./CaseList";
 import Heading from "../UI/Heading";
 import { useRef } from "react";
@@ -11,10 +18,16 @@ import Modal from "../UI/Modal";
 
 export default function Cases() {
   const dialog = useRef();
+  
 
   const handleModal = () => {
+
     dialog.current.showModal();
   };
+
+
+  
+
 
   return (
     <div>
@@ -97,14 +110,25 @@ export default function Cases() {
               <MenuItem value="Close">Close</MenuItem>
             </Select>
           </FormControl>
-          <div className="d-flex">
-            <button
-              className="btn btn-md rounded-pill m-3 fs-6"
-              style={{ backgroundColor: "#502cb7", color: "white" }}
-            >
-              Clear All
-            </button>
-          </div>
+          <TextField
+            name="date"
+            type="date"
+            size="small"
+            variant="outlined"
+            className="m-2"
+            sx={{
+              width: "45%",
+            }}
+          />
+        </div>
+
+        <div>
+          <button
+            className="btn btn-md rounded-pill fs-6"
+            style={{ backgroundColor: "#502cb7", color: "white" }}
+          >
+            Clear All
+          </button>
         </div>
       </div>
 

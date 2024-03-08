@@ -32,7 +32,6 @@
   font-size: 20px;
 }
 
-
 .box-area {
   width: 1260px;
 }
@@ -69,20 +68,51 @@
   color: white;
 }
 
-.list{
+.list {
   cursor: pointer;
 }
-.list:hover{
-  background-color:rgb(220, 239, 247) ;
+.list:hover {
+  background-color: rgb(220, 239, 247);
 }
 
-.drop{
+.drop {
   background-color: rgb(111, 77, 204);
 }
-.hover:hover{
+.hover:hover {
   background-color: rgb(136, 107, 214);
 }
 
-.user{
+.user {
   color: #502cb7;
+}
+
+.grid-title {
+  background: #d0bfff99;
+}
+
+.gride {
+  border: 1.4px solid #4c40d19e;
+  border-radius: 20px;
+  box-shadow: 0 0 10px 8px #4c40d133;
+}
+.g{
+  border: 1.4px solid #4c40d19e;
+  border-radius: 20px;
+  box-shadow: 0 0 10px 8px #4c40d133;
+}
+.card {
+  border: 1.4px solid #4c40d19e;
+  border-radius: 20px;
+}
+.color {
+  color: #2c42b7;
+}
+.color-green{
+  color: #2cb74b;
+}
+
+.abc{
+  background-color: white;
+  border-radius: 10px;
+  color: #2c42b7;
 }

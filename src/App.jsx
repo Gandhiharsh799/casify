@@ -12,14 +12,18 @@ import { Provider } from 'react-redux'
 import { store } from './store/store'
 import Setting from './components/Setting'
 import UserProfile from './components/UserProfile'
+import Services from './components/Services'
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#502cb7'
-    }
-  }
-})
+      main: "#502cb7",
+    },
+    secondary: {
+      main: "#2c42b7",
+    },
+  },
+});
 
 
 const router = createBrowserRouter([
@@ -53,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: 'cases',
         element: <Cases/>
+      },
+      {
+        path: 'services',
+        element: <Services/>
       },
       {
         path: 'setting',

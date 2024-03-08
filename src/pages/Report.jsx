@@ -5,20 +5,20 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "../index.css";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import '../index.css'
-
-
+import "../index.css";
 
 export default function ReportLayout() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  function handleNavigate(){
-    navigate('/login')
+  function handleNavigate() {
+    navigate("/login");
   }
 
   function handleNavigateUser() {
     navigate("/report/setting/userprofile");
   }
+
+  
   return (
     <>
       <header className="back ">
@@ -43,35 +43,21 @@ export default function ReportLayout() {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav pt-3 fs-5">
-                <Link
-                  className="nav-link text-white"
-                  aria-current="page"
-                  to="dashboard"
-                >
+                <Link className="nav-link text-white" to="dashboard">
                   Dashboard
                 </Link>
-                <Link
-                  className="nav-link text-white"
-                  aria-current="page"
-                  to="cases"
-                >
+                <Link className="nav-link text-white" to="cases">
                   Cases
                 </Link>
-                <Link className="nav-link text-white" href="#">
+                <Link className="nav-link text-white" to="services">
                   Services
                 </Link>
                 <Link className="nav-link text-white" href="#">
                   Documents
                 </Link>
-                <Link className="nav-link text-white" aria-disabled="true">
-                  Tasks
-                </Link>
-                <Link className="nav-link text-white" aria-disabled="true">
-                  Events
-                </Link>
-                <Link className="nav-link text-white" aria-disabled="true">
-                  Invoice
-                </Link>
+                <Link className="nav-link text-white">Tasks</Link>
+                <Link className="nav-link text-white">Events</Link>
+                <Link className="nav-link text-white">Invoice</Link>
                 <li className="dropdown">
                   <Link
                     className="nav-link dropdown-toggle text-white"

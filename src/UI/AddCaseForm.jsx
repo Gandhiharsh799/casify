@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { addCase } from "../store/caseSlice";
 
 export default function AddCaseForm({ close }) {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     caseNo: "",
     caseName: "",
@@ -23,6 +23,7 @@ export default function AddCaseForm({ close }) {
     lawyerName: "",
     staffLink: "",
     description: "",
+    status: "Open",
   });
   const [errors, setErrors] = useState({});
 
@@ -51,7 +52,7 @@ export default function AddCaseForm({ close }) {
     if (formData.court.trim() === "") {
       validationErrors.court = "Please select court";
     }
-    
+
     if (formData.date.trim() === "") {
       validationErrors.date = "Please  select a date";
     }
@@ -76,9 +77,8 @@ export default function AddCaseForm({ close }) {
       return;
     }
     console.log(formData);
-    dispatch(addCase(formData))
+    dispatch(addCase(formData));
     close();
-    
   }
 
   return (
@@ -123,6 +123,7 @@ export default function AddCaseForm({ close }) {
             value={formData.caseCategory}
             onChange={handleInputChange}
             error={!!errors.caseCategory}
+            
           >
             <MenuItem value="Theft">Theft</MenuItem>
             <MenuItem value="Crime">Crime</MenuItem>
@@ -141,6 +142,7 @@ export default function AddCaseForm({ close }) {
             value={formData.court}
             onChange={handleInputChange}
             error={!!errors.court}
+            
           >
             <MenuItem value="First Degree">First Degree</MenuItem>
             <MenuItem value="Appeal">Appeal</MenuItem>
@@ -176,6 +178,7 @@ export default function AddCaseForm({ close }) {
             error={!!errors.cityName}
             value={formData.cityName}
             onChange={handleInputChange}
+            
           >
             <MenuItem value="Ahmedabad">Ahmedabad</MenuItem>
             <MenuItem value="Gandhinagar">Gandhinagar</MenuItem>
@@ -195,7 +198,8 @@ export default function AddCaseForm({ close }) {
             name="caseGroup"
             value={formData.caseGroup}
             onChange={handleInputChange}
-            error={!!errors.cityName}
+            error={!!errors.caseGroup}
+           
           >
             <MenuItem value="Individual">Individual</MenuItem>
             <MenuItem value="Company">Company</MenuItem>
@@ -214,6 +218,7 @@ export default function AddCaseForm({ close }) {
             value={formData.clientName}
             onChange={handleInputChange}
             error={!!errors.clientName}
+            
           >
             <MenuItem value="Client 1">Client 1</MenuItem>
             <MenuItem value="Client 2">Client 2</MenuItem>
@@ -234,6 +239,7 @@ export default function AddCaseForm({ close }) {
             value={formData.lawyerName}
             onChange={handleInputChange}
             error={!!errors.lawyerName}
+            o
           >
             <MenuItem value="lawyer 1">lawyer 1</MenuItem>
             <MenuItem value="lawyer 2">lawyer 2</MenuItem>
@@ -251,6 +257,7 @@ export default function AddCaseForm({ close }) {
             name="staffLink"
             value={formData.staffLink}
             onChange={handleInputChange}
+           
           >
             <MenuItem value="Staff 1">Staff 1</MenuItem>
             <MenuItem value="Staff 2">Staff 2</MenuItem>
