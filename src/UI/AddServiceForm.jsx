@@ -110,8 +110,8 @@ export default function AddServiceForm({ close }) {
             onChange={handleInputChange}
             error={!!errors.serviceType}
           >
-            <MenuItem value="client1">Service 1</MenuItem>
-            <MenuItem value="client2">Service 2</MenuItem>
+            <MenuItem value="Service 1">Service 1</MenuItem>
+            <MenuItem value="Service 2">Service 2</MenuItem>
           </Select>
           {errors.serviceType && (
             <div className="text-danger">
@@ -124,7 +124,7 @@ export default function AddServiceForm({ close }) {
         <TextField
           name="startDate"
           type="date"
-          label="Start Name"
+          label="Start Date"
           variant="outlined"
           sx={{
             width: "45%",
@@ -155,15 +155,7 @@ export default function AddServiceForm({ close }) {
           inputProps={{ placeholder: "" }}
         />
 
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="End Date"
-            name="endDate"
-            sx={{ width: "45%" }}
-            value={formData.endDate}
-            onChange={handleInputChange}
-          />
-        </LocalizationProvider> */}
+        
       </div>
 
       <div className="m-3 d-flex flex-row justify-content-evenly">
@@ -197,8 +189,8 @@ export default function AddServiceForm({ close }) {
             onChange={handleInputChange}
             error={!!errors.clients}
           >
-            <MenuItem value="client1">Client 1</MenuItem>
-            <MenuItem value="client2">Client 2</MenuItem>
+            <MenuItem value="Client 1">Client 1</MenuItem>
+            <MenuItem value="Client 2">Client 2</MenuItem>
           </Select>
           {errors.clients && (
             <div className="text-danger">
@@ -234,8 +226,8 @@ export default function AddServiceForm({ close }) {
             onChange={handleInputChange}
             error={!!errors.lawyers}
           >
-            <MenuItem value="lawyer1">Lawyer 1</MenuItem>
-            <MenuItem value="lawyer2">Lawyer 2</MenuItem>
+            <MenuItem value="Lawyer 1">Lawyer 1</MenuItem>
+            <MenuItem value="Lawyer 2">Lawyer 2</MenuItem>
           </Select>
           {errors.lawyers && (
             <div className="text-danger">

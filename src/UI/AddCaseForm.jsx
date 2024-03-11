@@ -76,8 +76,15 @@ export default function AddCaseForm({ close }) {
       setErrors(validationErrors);
       return;
     }
-    console.log(formData);
-    dispatch(addCase(formData));
+
+    const currentDate = new Date();
+    const uniqueId = currentDate.getTime();
+    const newCase = {
+      caseId: uniqueId,
+      ...formData,
+    };
+    console.log(newCase);
+    dispatch(addCase(newCase));
     close();
   }
 
@@ -123,7 +130,6 @@ export default function AddCaseForm({ close }) {
             value={formData.caseCategory}
             onChange={handleInputChange}
             error={!!errors.caseCategory}
-            
           >
             <MenuItem value="Theft">Theft</MenuItem>
             <MenuItem value="Crime">Crime</MenuItem>
@@ -142,7 +148,6 @@ export default function AddCaseForm({ close }) {
             value={formData.court}
             onChange={handleInputChange}
             error={!!errors.court}
-            
           >
             <MenuItem value="First Degree">First Degree</MenuItem>
             <MenuItem value="Appeal">Appeal</MenuItem>
@@ -158,6 +163,7 @@ export default function AddCaseForm({ close }) {
 
       <div className="m-3 d-flex flex-row justify-content-evenly">
         <TextField
+          label="Issue Date"
           value={formData.date}
           onChange={handleInputChange}
           name="date"
@@ -169,6 +175,8 @@ export default function AddCaseForm({ close }) {
             width: "45%",
           }}
           FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-2px" } }}
+          InputLabelProps={{ shrink: true }}
+          inputProps={{ placeholder: "" }}
         />
         <FormControl variant="outlined" sx={{ width: "45%" }}>
           <InputLabel color="primary">City Name</InputLabel>
@@ -178,7 +186,6 @@ export default function AddCaseForm({ close }) {
             error={!!errors.cityName}
             value={formData.cityName}
             onChange={handleInputChange}
-            
           >
             <MenuItem value="Ahmedabad">Ahmedabad</MenuItem>
             <MenuItem value="Gandhinagar">Gandhinagar</MenuItem>
@@ -199,7 +206,6 @@ export default function AddCaseForm({ close }) {
             value={formData.caseGroup}
             onChange={handleInputChange}
             error={!!errors.caseGroup}
-           
           >
             <MenuItem value="Individual">Individual</MenuItem>
             <MenuItem value="Company">Company</MenuItem>
@@ -218,7 +224,6 @@ export default function AddCaseForm({ close }) {
             value={formData.clientName}
             onChange={handleInputChange}
             error={!!errors.clientName}
-            
           >
             <MenuItem value="Client 1">Client 1</MenuItem>
             <MenuItem value="Client 2">Client 2</MenuItem>
@@ -257,7 +262,6 @@ export default function AddCaseForm({ close }) {
             name="staffLink"
             value={formData.staffLink}
             onChange={handleInputChange}
-           
           >
             <MenuItem value="Staff 1">Staff 1</MenuItem>
             <MenuItem value="Staff 2">Staff 2</MenuItem>

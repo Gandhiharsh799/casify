@@ -71,9 +71,6 @@
 .list {
   cursor: pointer;
 }
-.list:hover {
-  background-color: rgb(220, 239, 247);
-}
 
 .drop {
   background-color: rgb(111, 77, 204);
@@ -117,5 +114,13 @@
   color: #2c42b7;
 }
 .no-placeholder input::placeholder {
-  opacity: 0; /* Hide the placeholder text */
+  opacity: 0;
+}
+
+.icon:hover{
+  border-radius: 60px;
+  background-color: #e7e6e6;
+}
+.tab{
+  background-color: #502cb7;
 }

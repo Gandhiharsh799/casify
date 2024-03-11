@@ -22,7 +22,9 @@ export default function ReportLayout() {
   return (
     <>
       <header className="back ">
-        <p className="fs-1 text-white pt-3 px-4">Casify</p>
+        <Link to="/report/dashboard" className="text-decoration-none">
+          <p className="fs-1 text-white pt-3 px-4">Casify</p>
+        </Link>
         <nav className="navbar navbar-expand-lg px-2 ">
           <div className="container-fluid ">
             <button

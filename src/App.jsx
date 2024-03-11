@@ -14,6 +14,10 @@ import Setting from './components/Setting'
 import UserProfile from './components/UserProfile'
 import Services from './components/Services'
 import ServiceDetails from './components/ServiceDetails'
+import ServiceList from './components/ServiceList'
+import CaseList from './components/CaseList'
+import CaseDetails from './components/CaseDetails'
+
 
 const theme = createTheme({
   palette: {
@@ -57,14 +61,28 @@ const router = createBrowserRouter([
       },
       {
         path: 'cases',
-        element: <Cases/>
+        element: <Cases/>,
+        children: [
+          {
+            index: true,
+            element:<CaseList/>
+          },
+          {
+            path:'/report/cases/:caseId',
+            element: <CaseDetails/>
+          }
+        ]
       },
       {
         path: 'services',
         element: <Services/>,
         children:[
           {
-            path: 'report/services/:id',
+            index: true,
+            element:<ServiceList/>,
+          },
+          {
+            path: '/report/services/:id',
             element: <ServiceDetails />
           },
         ],
