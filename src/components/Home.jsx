@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
-import logoImg from '../assets/logo.png';
-import  '../index.css';
+import { Link } from "react-router-dom";
+import logoImg from "../assets/logo.png";
+import "../index.css";
+
 export default function Home() {
   return (
     <>
@@ -36,12 +37,14 @@ export default function Home() {
             <ul className="navbar-nav ">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" href="/">
-                  <p className='nav-label fs-5 pt-1'>Home</p>
+                  <p className="nav-label fs-5 pt-1">Home</p>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="login">
-                  <button className='btn primary btn-lg login-button'>Login</button>
+                  <button className="btn primary btn-lg login-button">
+                    Login
+                  </button>
                 </Link>
               </li>
             </ul>

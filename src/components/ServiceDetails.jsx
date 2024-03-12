@@ -12,17 +12,15 @@ export default function ServiceDetails() {
 
   const service = services.find((serv) => serv.id.toString() === id.toString());
   console.log(service);
-  if(!service){
-    return <p>service not found</p>
+  if (!service) {
+    return <p>service not found</p>;
   }
 
   console.log(services);
-  
-  function handleClick(){
-    navigate('/report/services')
+
+  function handleClick() {
+    navigate("/report/services");
   }
- 
-  
 
   return (
     <div>
@@ -39,8 +37,7 @@ export default function ServiceDetails() {
       <div className="d-flex justify-content-start">
         <FontAwesomeIcon
           icon={faCircleInfo}
-          className="mt-2 ps-4 pe-3"
-          style={{ color: "#502cb7", height: "25px" }}
+          className="mt-2 ps-4 pe-3 icon"
         />
         <p className="fs-3 fw-bold">Service Information</p>
       </div>

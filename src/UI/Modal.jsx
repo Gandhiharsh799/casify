@@ -4,10 +4,8 @@ import { createPortal } from "react-dom";
 import { Dialog } from "@mui/material";
 import AddCaseForm from "./AddCaseForm";
 
-
 const Modal = forwardRef(function Modal(props, ref) {
   const [isOpen, setIsOpen] = useState(false);
- 
 
   useImperativeHandle(ref, () => ({
     showModal() {
@@ -19,7 +17,6 @@ const Modal = forwardRef(function Modal(props, ref) {
     setIsOpen(false);
   };
 
-
   return createPortal(
     <Dialog
       open={isOpen}
@@ -30,15 +27,13 @@ const Modal = forwardRef(function Modal(props, ref) {
       fullWidth
       onClose={closeModal}
     >
-     
-      <div style={{ width: "100%" }}>
+      <div>
         <header className="head">
           <p className="p-2 px-4 fs-4">Add Case</p>
         </header>
 
         <AddCaseForm close={closeModal} />
       </div>
-      
     </Dialog>,
     document.getElementById("root")
   );

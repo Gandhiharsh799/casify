@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addCase } from "../store/caseSlice";
+import Button from "./Button";
 
 export default function AddCaseForm({ close }) {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ export default function AddCaseForm({ close }) {
       caseId: uniqueId,
       ...formData,
     };
-    console.log(newCase);
+
     dispatch(addCase(newCase));
     close();
   }
@@ -286,13 +287,7 @@ export default function AddCaseForm({ close }) {
       </div>
 
       <div className="d-flex flex-row justify-content-center">
-        <button
-          type="submit"
-          className="btn btn-lg rounded-pill m-3 fs-6"
-          style={{ backgroundColor: "#502cb7", color: "white" }}
-        >
-          Submit
-        </button>
+        <Button type="submit" label="Submit"></Button>
       </div>
     </form>
   );

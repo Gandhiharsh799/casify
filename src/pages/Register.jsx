@@ -4,83 +4,79 @@ import "../index.css";
 import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../store/userProfileSlice";
+import Button from "../UI/Button";
 
 export default function Register() {
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormdata] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    mobileNumber: '',
-    companyAddress: '',
-    vatNumber: ''
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    mobileNumber: "",
+    companyAddress: "",
+    vatNumber: "",
+  });
 
-  })
+  const [errors, setErrors] = useState({});
 
-  const [errors, setErrors] = useState({})
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setFormdata({
+      ...formData,
+      [name]: value,
+    });
+  }
 
-    function handleInputChange(event){
-      const {name, value} = event.target
-      setFormdata({
-        ...formData,
-        [name]: value
-      })
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const validationErrors = {};
+
+    if (formData.name.trim() === "") {
+      validationErrors.name = "Name is required";
     }
 
-    function handleSubmit(event){
-      event.preventDefault();
-
-      const validationErrors = {};
-
-      if (formData.name.trim() === "") {
-        validationErrors.name = "Name is required";
-      }
-
-      if (formData.email.trim() === "") {
-        validationErrors.email = "You must enter an email ";
-      }
-      if (!formData.email.trim().includes("@")) {
-        validationErrors.email = "You must enter a valid email";
-      }
-      if (formData.password.trim() === "") {
-        validationErrors.password = "Password is required"
-      }
-      else if (formData.password.length < 6) {
-        validationErrors.password =
-          "Password is too short - should be 6 chars minimum.";
-      }
-      if (formData.confirmPassword.trim() === "") {
-        validationErrors.confirmPassword = "confirm password is required";
-      }
-      else if (formData.confirmPassword !== formData.password) {
-        validationErrors.confirmPassword =
-          "Passwords must match";
-      }
-      if (formData.mobileNumber.trim() === "") {
-        validationErrors.mobileNumber = "You must enter a mobile number";
-      } else if (formData.mobileNumber.length < 10) {
-        validationErrors.mobileNumber =
-          "Number is too short - should be 10 chars.";
-      }
-
-      if (Object.keys(validationErrors).length > 0) {
-        setErrors(validationErrors);
-        return;
-      }
-      console.log("signup form submitted", formData);
-      dispatch(setUserData(formData))
-      navigate("/login");
+    if (formData.email.trim() === "") {
+      validationErrors.email = "You must enter an email ";
     }
+    if (!formData.email.trim().includes("@")) {
+      validationErrors.email = "You must enter a valid email";
+    }
+    if (formData.password.trim() === "") {
+      validationErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      validationErrors.password =
+        "Password is too short - should be 6 chars minimum.";
+    }
+    if (formData.confirmPassword.trim() === "") {
+      validationErrors.confirmPassword = "confirm password is required";
+    } else if (formData.confirmPassword !== formData.password) {
+      validationErrors.confirmPassword = "Passwords must match";
+    }
+    if (formData.mobileNumber.trim() === "") {
+      validationErrors.mobileNumber = "You must enter a mobile number";
+    } else if (formData.mobileNumber.length < 10) {
+      validationErrors.mobileNumber =
+        "Number is too short - should be 10 chars.";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    console.log("signup form submitted", formData);
+    dispatch(setUserData(formData));
+    navigate("/login");
+  }
 
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="row bg-white shadow-lg box-area">
-        <div className="col-md-6 p-3 d-flex justify-content-center rounded-start-4 flex-column align-items-center left-box">
-          <div className="text-center">
+        <div className="hidden left-box rounded-start-4 ">
+          <div className="text-center d-flex justify-content-center flex-column align-items-center p-3 h-100">
             <h1 className="text-white fs-1 fw-bold">Welcome to Casify!</h1>
             <p className="text-white">Manage your details here</p>
           </div>
@@ -88,18 +84,13 @@ export default function Register() {
 
         <div className="col-md-6 rounded-end-4 border right-box">
           <div className="row align-items-center">
-            <p
-              className="text-center p-2  nav-label"
-              style={{ fontSize: "64px" }}
-            >
-              Casify
-            </p>
+            <p className="text-center p-2  nav-label heading">Casify</p>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="d-flex flex-column align-items-center">
               <TextField
                 type="text"
-                className="mb-2"
+                className="mb-3"
                 name="name"
                 label="Name"
                 variant="outlined"
@@ -113,7 +104,7 @@ export default function Register() {
               />
               <TextField
                 type="email"
-                className="mb-2"
+                className="mb-3"
                 name="email"
                 label="Email"
                 variant="outlined"
@@ -127,7 +118,7 @@ export default function Register() {
               />
               <TextField
                 type="password"
-                className="mb-2"
+                className="mb-3"
                 name="password"
                 label="Password"
                 variant="outlined"
@@ -141,7 +132,7 @@ export default function Register() {
               />
               <TextField
                 type="password"
-                className="mb-2"
+                className="mb-3"
                 name="confirmPassword"
                 label="Confirm Password"
                 variant="outlined"
@@ -155,7 +146,7 @@ export default function Register() {
               />
               <TextField
                 type="number"
-                className="mb-2"
+                className="mb-3"
                 name="mobileNumber"
                 label="Mobile Number"
                 variant="outlined"
@@ -169,7 +160,7 @@ export default function Register() {
               />
               <TextField
                 type="text"
-                className="mb-2"
+                className="mb-3"
                 name="companyAddress"
                 label="Company Address"
                 variant="outlined"
@@ -183,7 +174,7 @@ export default function Register() {
               />
               <TextField
                 type="text"
-                className="mb-2"
+                className="mb-3"
                 name="vatNumber"
                 label="Vat Number"
                 variant="outlined"
@@ -196,22 +187,15 @@ export default function Register() {
                 helperText={errors.vatNumber}
               />
             </div>
-            <div className="input-group mb-4 justify-content-center">
-              <button
-                type="submit"
-                className="btn btn-lg rounded-pill m-3 fs-6"
-                style={{ backgroundColor: "#502cb7", color: "white" }}
-              >
-                Sign up
-              </button>
+            <div className="mb-4 d-flex justify-content-center">
+              <Button type="submit" label="Sign Up"></Button>
             </div>
           </form>
-          <div className="d-flex flex-column align-items-center">
-            <small className="text-center mt-4">Already have an account?</small>
+
+          <div className="row">
+            <p className="text-center mt-4">Already have an account?</p>
             <Link to="/login">
-              <small className="m-3" style={{ color: "#502cb7" }}>
-                Sign in
-              </small>
+              <p className="mb-3 text-center user">Sign in</p>
             </Link>
           </div>
         </div>

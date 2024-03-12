@@ -25,7 +25,7 @@ const ServiceModal = forwardRef(function ServiceModal(props, ref) {
       fullWidth
       PaperProps={{ sx: { borderRadius: "15px" } }}
     >
-      <div style={{ width: "100%" }}>
+      <div>
         <header className="head">
           <p className="p-2 px-4 fs-4">Add Service</p>
         </header>

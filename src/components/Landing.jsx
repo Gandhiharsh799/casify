@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import dashboard from "../assets/Dashboard.png";
-
 import { Link } from "react-router-dom";
+
 export default function Landing() {
   return (
     <div className="hero-section">

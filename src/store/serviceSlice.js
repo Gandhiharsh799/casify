@@ -7,7 +7,10 @@ export const serviceSlice = createSlice({
   },
   reducers: {
     addService: (state, action) => {
-      state.services.push(action.payload);
+      return {
+        ...state,
+        services: [...state.services, action.payload],
+      };
     },
   },
 });

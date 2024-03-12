@@ -20,54 +20,53 @@ import {
   Table,
 } from "@mui/material";
 import ServiceModal from "../UI/ServiceModal";
-import styled from "@emotion/styled";
+import StyledRow from "../theme/theme";
+import Button from "../UI/Button";
+
+const tableHeaders = [
+  { label: "Service Name", key: "serviceName" },
+  { label: "Service Type", key: "serviceType" },
+  { label: "Start Date", key: "startDate" },
+  { label: "End Date", key: "endDate" },
+  { label: "Status", key: "status" },
+  { label: "Clients", key: "clients" },
+  { label: "Lawyers", key: "lawyers" },
+];
 
 export default function ServiceList() {
   const dialog = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleModal() {
     dialog.current.showModal();
   }
   const services = useSelector((state) => state.services.services);
 
-  const StyledRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: "white",
-    },
-    "&:nth-of-type(even)": {
-      backgroundColor: "#ece5ff",
-    },
-    "&:nth-of-type(even):hover": {
-      backgroundColor: "#dceff7",
-    },
-    "&:nth-of-type(odd):hover": {
-      backgroundColor: "#dceff7",
-    },
-  }));
+  const serviceData = (serviceItem) =>
+    tableHeaders.map((header, index) => (
+      <TableCell key={index} align="center" className="fs-6 fw-bold">
+        {serviceItem[header.key]}
+      </TableCell>
+    ));
 
   return (
-    <div>
+    <>
       <ServiceModal ref={dialog} />
       <div className="d-flex flex-row justify-content-between">
         <div className="d-flex">
           <FontAwesomeIcon
             icon={faCircleInfo}
-            className="py-4 ps-4 pe-3"
-            style={{ color: "#502cb7", height: "25px" }}
+            className="py-4 ps-4 pe-3 icon"
           />
           <p className="mt-3 fs-3 fw-bold">Services</p>
         </div>
 
         <div className="d-flex">
-          <button
-            className="btn btn-lg rounded-pill m-3 fs-6"
-            style={{ backgroundColor: "#502cb7", color: "white" }}
+          <Button
+            label="Add Service"
             onClick={handleModal}
-          >
-            <FontAwesomeIcon icon={faPlus} className="px-1" />
-            Add Service
-          </button>
+            icon={faPlus}
+          ></Button>
         </div>
       </div>
       <div className="d-flex flex-row justify-content-start align-items-center">
@@ -127,27 +126,15 @@ export default function ServiceList() {
         <Table>
           <TableHead className="tab">
             <TableRow>
-              <TableCell className="fs-6 fw-bold text-white " align="center" >
-                Service Name
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Service Type
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Start Date
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                End Date
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Status
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Clients
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Lawyers
-              </TableCell>
+              {tableHeaders.map((header, index) => (
+                <TableCell
+                  key={index}
+                  className="fs-6 fw-bold text-white"
+                  align="center"
+                >
+                  {header.label}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
 
@@ -158,22 +145,12 @@ export default function ServiceList() {
                 onClick={() => navigate(`/report/services/${service.id}`)}
                 className="list"
               >
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {service.serviceName}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {service.serviceType}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">{service.startDate}</TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">{service.endDate}</TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">{service.status}</TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">{service.clients}</TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">{service.lawyers}</TableCell>
+                {serviceData(service)}
               </StyledRow>
             </>
           ))}
         </Table>
       </TableContainer>
-    </div>
+    </>
   );
 }

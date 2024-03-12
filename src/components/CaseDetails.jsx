@@ -11,7 +11,9 @@ export default function CaseDetails() {
   const document = useSelector((state) => state.cases.cases);
   const navigate = useNavigate();
 
-  const caseData = document.find((cas)=>cas.caseId.toString() === caseId.toString());
+  const caseData = document.find(
+    (cas) => cas.caseId.toString() === caseId.toString()
+  );
 
   if (!caseData) {
     return <p>Case not found</p>;
@@ -24,34 +26,18 @@ export default function CaseDetails() {
   const issueDate = new Date(caseData.date);
   const currentDate = new Date();
   const timeDifference = currentDate.getTime() - issueDate.getTime();
-  const daysOpen = Math.floor(timeDifference / (1000 *3600*24))
-
-  let day;
-  if(caseData.status === 'Open'){
-     day = 'Days Open';
-  }
-  else{
-    day = 'Closed in'
-  }
+  const daysOpen = Math.floor(timeDifference / (1000 * 3600 * 24));
 
   return (
     <div>
       <div>
         <button className=" btn btn-sm bg-white border-0" onClick={handleClick}>
-          <FontAwesomeIcon
-            icon={faArrowLeft}
-            className="py-4 ps-4 pe-3 icon"
-            style={{ color: "#502cb7", height: "20px" }}
-          />
+          <FontAwesomeIcon icon={faArrowLeft} className="py-4 ps-4 pe-3 icon" />
         </button>
       </div>
 
       <div className="d-flex justify-content-start">
-        <FontAwesomeIcon
-          icon={faClock}
-          className="mt-2 ps-4 pe-3"
-          style={{ color: "#502cb7", height: "25px" }}
-        />
+        <FontAwesomeIcon icon={faClock} className="mt-2 ps-4 pe-3 icon" />
         <p className="fs-3 user">Case Timeline</p>
       </div>
 
@@ -65,7 +51,8 @@ export default function CaseDetails() {
             <Grid container>
               <Grid item xs={12}>
                 <p className="fw-bold fs-4 p-2">
-                  {day} - {daysOpen} days
+                  {caseData.status === "Open" ? "Days Open" : "Close in"} -{" "}
+                  {daysOpen} days
                 </p>
               </Grid>
               <Grid item xs={12} sm={2}>
@@ -121,11 +108,7 @@ export default function CaseDetails() {
         </Card>
       </Paper>
       <div className="d-flex justify-content-start mt-4">
-        <FontAwesomeIcon
-          icon={faUsers}
-          className="mt-2 ps-4 pe-3"
-          style={{ color: "#502cb7", height: "25px" }}
-        />
+        <FontAwesomeIcon icon={faUsers} className="mt-2 ps-4 pe-3 icon" />
         <p className="fs-3 user">Staff Information</p>
       </div>
 
@@ -141,7 +124,7 @@ export default function CaseDetails() {
                 <p className="fw-bold px-2">Staff Name</p>
               </Grid>
               <Grid item xs={12} sm={7}>
-                <p className=" px-2">{caseData.staffLink}</p>
+                <p className="px-2">{caseData.staffLink}</p>
               </Grid>
             </Grid>
           </CardContent>

@@ -9,6 +9,7 @@ import {
 import "../index.css";
 import { useDispatch } from "react-redux";
 import { addService } from "../store/serviceSlice";
+import Button from "./Button";
 
 export default function AddServiceForm({ close }) {
   const dispatch = useDispatch();
@@ -72,15 +73,12 @@ export default function AddServiceForm({ close }) {
 
     const currentDate = new Date();
     const uniqueId = currentDate.getTime();
-    
 
     const newService = {
       id: uniqueId,
       ...formData,
-    }
-    
-    console.log(newService);
-    console.log("done");
+    };
+
     dispatch(addService(newService));
     close();
   }
@@ -154,8 +152,6 @@ export default function AddServiceForm({ close }) {
           InputLabelProps={{ shrink: true }}
           inputProps={{ placeholder: "" }}
         />
-
-        
       </div>
 
       <div className="m-3 d-flex flex-row justify-content-evenly">
@@ -238,13 +234,9 @@ export default function AddServiceForm({ close }) {
       </div>
 
       <div className="d-flex flex-row justify-content-center">
-        <button
-          type="submit"
-          className="btn btn-lg rounded-pill m-3 fs-6"
-          style={{ backgroundColor: "#502cb7", color: "white" }}
-        >
+        <Button type="submit" label="Submit">
           Submit
-        </button>
+        </Button>
       </div>
     </form>
   );
