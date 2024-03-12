@@ -23,7 +23,7 @@ export default function ServiceDetails() {
   }
 
   return (
-    <div>
+    <>
       <div>
         <button className=" btn btn-sm bg-white border-0" onClick={handleClick}>
           <FontAwesomeIcon
@@ -35,10 +35,7 @@ export default function ServiceDetails() {
       </div>
 
       <div className="d-flex justify-content-start">
-        <FontAwesomeIcon
-          icon={faCircleInfo}
-          className="mt-2 ps-4 pe-3 icon"
-        />
+        <FontAwesomeIcon icon={faCircleInfo} className="mt-2 ps-4 pe-3 icon" />
         <p className="fs-3 fw-bold">Service Information</p>
       </div>
 
@@ -79,6 +76,6 @@ export default function ServiceDetails() {
           </CardContent>
         </Card>
       </Paper>
-    </div>
+    </>
   );
 }

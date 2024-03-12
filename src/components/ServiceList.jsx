@@ -18,6 +18,7 @@ import {
   TableCell,
   TableHead,
   Table,
+  TextField,
 } from "@mui/material";
 import ServiceModal from "../UI/ServiceModal";
 import StyledRow from "../theme/theme";
@@ -75,51 +76,61 @@ export default function ServiceList() {
           <FontAwesomeIcon icon={faChevronRight} className="mt-2 ms-2" />
           <FontAwesomeIcon icon={faChevronRight} className="mt-2" />
         </div>
-        <div className="d-flex flex-row mx-3  ">
-          <FormControl
-            variant="standard"
-            sx={{ minWidth: 150 }}
-            className="ms-2"
-          >
-            <InputLabel>Service Type</InputLabel>
-            <Select color="primary" label="Age">
-              <MenuItem value="service1">Service 1</MenuItem>
-              <MenuItem value="service2">Service 2</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            variant="standard"
-            sx={{ minWidth: 150 }}
-            className="ms-3"
-          >
-            <InputLabel>Status</InputLabel>
-            <Select label="Case Stage">
-              <MenuItem value="First Degree">First Degree</MenuItem>
-              <MenuItem value="Reviewing">Reviewing</MenuItem>
-              <MenuItem value="Reject">Reject</MenuItem>
-              <MenuItem value="Close">Close</MenuItem>
-              <MenuItem value="Invoice">Invoice</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
 
-        <div>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+        <div className="scrollable-container">
+          <div className="d-flex flex-row mx-3  ">
+            <FormControl
+              variant="standard"
+              sx={{ minWidth: 150 }}
+              className="ms-2"
+            >
+              <InputLabel>Service Type</InputLabel>
+              <Select color="primary" label="Age">
+                <MenuItem value="service1">Service 1</MenuItem>
+                <MenuItem value="service2">Service 2</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="standard"
+              sx={{ minWidth: 150 }}
+              className="ms-3"
+            >
+              <InputLabel>Status</InputLabel>
+              <Select label="Case Stage">
+                <MenuItem value="First Degree">First Degree</MenuItem>
+                <MenuItem value="Reviewing">Reviewing</MenuItem>
+                <MenuItem value="Reject">Reject</MenuItem>
+                <MenuItem value="Close">Close</MenuItem>
+                <MenuItem value="Invoice">Invoice</MenuItem>
+              </Select>
+            </FormControl>
+
+            <TextField
+              className="m-3"
               label="Start Date"
-              sx={{ width: "30%" }}
-              className="mx-3"
+              type="date"
+              inputProps={{ placeholder: "" }}
+              InputLabelProps={{ shrink: true }}
+              size="small"
             />
-            <DatePicker label="End Date" sx={{ width: "30%" }} />
-          </LocalizationProvider>
 
-          <button
-            className="btn btn-md rounded-pill fs-6 my-2 mx-3"
-            style={{ backgroundColor: "#502cb7", color: "white" }}
-          >
-            Clear All
-          </button>
+            <TextField
+              className="m-3"
+              label="End Date"
+              type="date"
+              inputProps={{ placeholder: "" }}
+              InputLabelProps={{ shrink: true }}
+              size="small"
+            />
+          </div>
         </div>
+
+        <button
+          className="btn btn-md rounded-pill fs-6 my-2 mx-3"
+          style={{ backgroundColor: "#502cb7", color: "white" }}
+        >
+          Clear All
+        </button>
       </div>
 
       <TableContainer className="mt-3">

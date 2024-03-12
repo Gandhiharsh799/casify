@@ -4,9 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import {
   Select,
   MenuItem,
@@ -17,6 +15,7 @@ import {
   TableRow,
   TableCell,
   Table,
+  TextField
 } from "@mui/material";
 import { useRef } from "react";
 import Modal from "../UI/Modal";
@@ -56,7 +55,7 @@ export default function CaseList() {
   return (
     <>
       <Modal ref={dialog} />
-      <div className="d-flex flex-row justify-content-between">
+      <div className="d-flex flex-column flex-md-row justify-content-between">
         <div className="d-flex">
           <FontAwesomeIcon icon={faBriefcase} className="py-4 ps-4 pe-3 icon" />
           <p className="mt-3 fs-3 fw-bold">Cases</p>
@@ -84,48 +83,51 @@ export default function CaseList() {
           <FontAwesomeIcon icon={faChevronRight} className="mt-2" />
         </div>
 
-        <div className="d-flex flex-row ms-3  ">
-          <FormControl
-            variant="standard"
-            sx={{ minWidth: 150 }}
-            className="ms-2"
-          >
-            <InputLabel>Case Category</InputLabel>
-            <Select color="primary" label="Age">
-              <MenuItem value="Theft">Theft</MenuItem>
-              <MenuItem value="Crime">Crime</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            variant="standard"
-            sx={{ minWidth: 150 }}
-            className="ms-3"
-          >
-            <InputLabel>Case Stage</InputLabel>
-            <Select label="Case Stage">
-              <MenuItem value="First Degree">First Degree</MenuItem>
-              <MenuItem value="Appeal">Appeal</MenuItem>
-              <MenuItem value="Supreme">Supreme</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            className="ms-3"
-            variant="standard"
-            sx={{ minWidth: 150 }}
-          >
-            <InputLabel>Case Status</InputLabel>
-            <Select label="Age">
-              <MenuItem value="Open">Open</MenuItem>
-              <MenuItem value="Close">Close</MenuItem>
-            </Select>
-          </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Start Date"
-              sx={{ width: "25%" }}
+        <div className="scrollable-container">
+          <div className="d-flex flex-row ms-3  ">
+            <FormControl
+              variant="standard"
+              sx={{ minWidth: 150 }}
+              className="ms-2"
+            >
+              <InputLabel>Case Category</InputLabel>
+              <Select color="primary" label="Age">
+                <MenuItem value="Theft">Theft</MenuItem>
+                <MenuItem value="Crime">Crime</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="standard"
+              sx={{ minWidth: 150 }}
               className="ms-3"
+            >
+              <InputLabel>Case Stage</InputLabel>
+              <Select label="Case Stage">
+                <MenuItem value="First Degree">First Degree</MenuItem>
+                <MenuItem value="Appeal">Appeal</MenuItem>
+                <MenuItem value="Supreme">Supreme</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              className="ms-3"
+              variant="standard"
+              sx={{ minWidth: 150 }}
+            >
+              <InputLabel>Case Status</InputLabel>
+              <Select label="Age">
+                <MenuItem value="Open">Open</MenuItem>
+                <MenuItem value="Close">Close</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              className="m-3"
+              label="Issue Date"
+              type="date"
+              inputProps={{ placeholder: "" }}
+              InputLabelProps={{ shrink: true }}
+              size="small"
             />
-          </LocalizationProvider>
+          </div>
         </div>
 
         <div>

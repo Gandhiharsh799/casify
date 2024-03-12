@@ -37,7 +37,7 @@ export default function UserProfile() {
   }
 
   return (
-    <div>
+    <>
       <div className="d-flex justify-content-between mt-3">
         <div className="d-flex user">
           <FontAwesomeIcon icon={faUserTie} className="py-2 ps-4 pe-3 icon" />
@@ -129,6 +129,6 @@ export default function UserProfile() {
           <Button type="submit" label="Submit"></Button>
         </div>
       </form>
-    </div>
+    </>
   );
 }

@@ -29,7 +29,7 @@ export default function CaseDetails() {
   const daysOpen = Math.floor(timeDifference / (1000 * 3600 * 24));
 
   return (
-    <div>
+    <>
       <div>
         <button className=" btn btn-sm bg-white border-0" onClick={handleClick}>
           <FontAwesomeIcon icon={faArrowLeft} className="py-4 ps-4 pe-3 icon" />
@@ -130,6 +130,6 @@ export default function CaseDetails() {
           </CardContent>
         </Card>
       </Paper>
-    </div>
+    </>
   );
 }
