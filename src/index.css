@@ -150,6 +150,11 @@
   font-size: 64px;
 }
 
+.scrollable-container{
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 @media screen and (max-width: 768px) {
   .right-box {
     width: 100%;
@@ -157,5 +162,25 @@
   }
   .hidden {
     display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .scrollable-container{
+    overflow-x: scroll;
+  }
+
+  .search{
+    height: 45px;
+    width: 75%;
+  }
+  .btnn{
+    font-size: 10px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .box-area{
+    width: 75%;
+    
   }
 }
