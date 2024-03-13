@@ -14,7 +14,7 @@
 
 .hero-section {
   display: flex;
-  padding: 100px 32px;
+  padding: 50px 32px;
 }
 
 .hero-section-label {
@@ -143,14 +143,14 @@
   outline: none;
   flex-grow: 1;
 }
-.dash{
+.dash {
   padding-bottom: 60px;
 }
-.heading{
+.heading {
   font-size: 64px;
 }
 
-.scrollable-container{
+.scrollable-container {
   overflow-x: auto;
   white-space: nowrap;
 }
@@ -165,22 +165,21 @@
   }
 }
 @media screen and (max-width: 600px) {
-  .scrollable-container{
+  .scrollable-container {
     overflow-x: scroll;
   }
 
-  .search{
+  .search {
     height: 45px;
     width: 75%;
   }
-  .btnn{
+  .btnn {
     font-size: 10px !important;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .box-area{
+  .box-area {
     width: 75%;
-    
   }
 }

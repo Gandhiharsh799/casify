@@ -1,53 +1,22 @@
-import { useState } from "react";
 import "../index.css";
 import { Link, useNavigate } from "react-router-dom";
-import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { login } from "../store/authSlice";
 import Button from "../UI/Button";
+import { Form, Formik } from "formik";
+import { LoginSchema } from "../schemas/validationSchema";
+import { InputField } from "../UI/InputField";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+
+  const initialValues = {
     email: "",
     password: "",
-  });
-
-  const [errors, setErrors] = useState({});
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const validationErrors = {};
-
-    if (formData.email.trim() === "") {
-      validationErrors.email = "You must enter an email ";
-    }
-    if (!formData.email.trim().includes("@")) {
-      validationErrors.email = "You must enter a valid email";
-    }
-    if (formData.password.trim() === "") {
-      validationErrors.password = "password is a required field";
-    }
-    if (formData.password.length != 0 && formData.password.length < 6) {
-      validationErrors.password =
-        "Password is too short - should be 6 chars minimum.";
-    }
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    console.log("login form submitted", formData);
+  const handleSubmit = () => {
     dispatch(login());
     navigate("/report/dashboard");
   };
@@ -66,43 +35,46 @@ export default function Login() {
           <div className="row align-items-center">
             <p className="text-center p-2 heading my-4 nav-label">Casify</p>
           </div>
-          <form onSubmit={handleSubmit}>
-            <div className="mt-3 pt-3 d-flex flex-column align-items-center ">
-              <TextField
-                type="text"
-                className="mb-3"
-                name="email"
-                label="Email"
-                variant="outlined"
-                error={!!errors.email}
-                value={formData.email}
-                onChange={handleInputChange}
-                sx={{
-                  width: "70%",
-                }}
-                helperText={errors.email}
-              />
 
-              <TextField
-                type="password"
-                className="mb-3"
-                name="password"
-                label="Password"
-                variant="outlined"
-                error={!!errors.password}
-                value={formData.password}
-                onChange={handleInputChange}
-                sx={{
-                  width: "70%",
-                }}
-                helperText={errors.password}
-              />
-            </div>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={LoginSchema}
+          >
+            {({ touched, errors, values, handleChange, handleBlur }) => (
+              <Form>
+                <div className="mt-3 pt-3 d-flex flex-column align-items-center ">
+                  <InputField
+                    type="text"
+                    name="email"
+                    label="Email"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.email && !!errors.email}
+                    helperText={touched.email && errors.email}
+                    touched={touched.email}
+                  />
 
-            <div className="mb-5 d-flex justify-content-center">
-              <Button type="submit" label="Submit"></Button>
-            </div>
-          </form>
+                  <InputField
+                    type="password"
+                    name="password"
+                    label="Password"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.password && errors.password}
+                    helperText={touched.password && errors.password}
+                    touched={touched.password}
+                  />
+                </div>
+
+                <div className="mb-5 d-flex justify-content-center">
+                  <Button type="submit" label="Submit"></Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
 
           <div className="row">
             <p className="text-center mt-5">Don't have an account?</p>

@@ -11,12 +11,10 @@ export default function ServiceDetails() {
   const services = useSelector((state) => state.services.services);
 
   const service = services.find((serv) => serv.id.toString() === id.toString());
-  console.log(service);
+
   if (!service) {
     return <p>service not found</p>;
   }
-
-  console.log(services);
 
   function handleClick() {
     navigate("/report/services");

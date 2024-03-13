@@ -15,7 +15,7 @@ import {
   TableRow,
   TableCell,
   Table,
-  TextField
+  TextField,
 } from "@mui/material";
 import { useRef } from "react";
 import Modal from "../UI/Modal";
