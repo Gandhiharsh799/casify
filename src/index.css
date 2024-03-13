@@ -14,7 +14,7 @@
 
 .hero-section {
   display: flex;
-  padding: 100px 32px;
+  padding: 50px 32px;
 }
 
 .hero-section-label {
@@ -73,10 +73,11 @@
 }
 
 .drop {
-  background-color: rgb(111, 77, 204);
+  background-color: #6f4dcc;
+  margin-left: -120px;
 }
 .hover:hover {
-  background-color: rgb(136, 107, 214);
+  background-color: #886bd6;
 }
 
 .user {
@@ -92,7 +93,7 @@
   border-radius: 20px;
   box-shadow: 0 0 10px 8px #4c40d133;
 }
-.g{
+.g {
   border: 1.4px solid #4c40d19e;
   border-radius: 20px;
   box-shadow: 0 0 10px 8px #4c40d133;
@@ -104,11 +105,11 @@
 .color {
   color: #2c42b7;
 }
-.color-green{
+.color-green {
   color: #2cb74b;
 }
 
-.abc{
+.abc {
   background-color: white;
   border-radius: 10px;
   color: #2c42b7;
@@ -117,10 +118,68 @@
   opacity: 0;
 }
 
-.icon:hover{
+.icon {
+  color: #502cb7;
+  height: 25px;
+}
+
+.icon:hover {
   border-radius: 60px;
   background-color: #e7e6e6;
 }
-.tab{
+.tab {
   background-color: #502cb7;
+}
+.navbar-nav {
+  --bs-nav-link-color: white;
+  --bs-nav-link-hover-color: white;
+}
+.dropdown-menu {
+  --bs-dropdown-bg: #6f4dcc;
+}
+
+.input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+.dash {
+  padding-bottom: 60px;
+}
+.heading {
+  font-size: 64px;
+}
+
+.scrollable-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 768px) {
+  .right-box {
+    width: 100%;
+    border-radius: 16px;
+  }
+  .hidden {
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .scrollable-container {
+    overflow-x: scroll;
+  }
+
+  .search {
+    height: 45px;
+    width: 75%;
+  }
+  .btnn {
+    font-size: 10px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .box-area {
+    width: 75%;
+  }
 }

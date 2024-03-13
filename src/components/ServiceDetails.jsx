@@ -11,21 +11,17 @@ export default function ServiceDetails() {
   const services = useSelector((state) => state.services.services);
 
   const service = services.find((serv) => serv.id.toString() === id.toString());
-  console.log(service);
-  if(!service){
-    return <p>service not found</p>
+
+  if (!service) {
+    return <p>service not found</p>;
   }
 
-  console.log(services);
-  
-  function handleClick(){
-    navigate('/report/services')
+  function handleClick() {
+    navigate("/report/services");
   }
- 
-  
 
   return (
-    <div>
+    <>
       <div>
         <button className=" btn btn-sm bg-white border-0" onClick={handleClick}>
           <FontAwesomeIcon
@@ -37,11 +33,7 @@ export default function ServiceDetails() {
       </div>
 
       <div className="d-flex justify-content-start">
-        <FontAwesomeIcon
-          icon={faCircleInfo}
-          className="mt-2 ps-4 pe-3"
-          style={{ color: "#502cb7", height: "25px" }}
-        />
+        <FontAwesomeIcon icon={faCircleInfo} className="mt-2 ps-4 pe-3 icon" />
         <p className="fs-3 fw-bold">Service Information</p>
       </div>
 
@@ -82,6 +74,6 @@ export default function ServiceDetails() {
           </CardContent>
         </Card>
       </Paper>
-    </div>
+    </>
   );
 }

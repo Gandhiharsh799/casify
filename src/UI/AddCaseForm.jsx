@@ -1,17 +1,15 @@
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import { useState } from "react";
+import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addCase } from "../store/caseSlice";
+import Button from "./Button";
+import { Form, Formik } from "formik";
+import { caseSchema } from "../schemas/caseValidationSchema";
+import { SelectItem } from "./SelectItem";
+import { ModalInput } from "./ModalInput";
 
 export default function AddCaseForm({ close }) {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
+  const initialValues = {
     caseNo: "",
     caseName: "",
     caseCategory: "",
@@ -24,276 +22,172 @@ export default function AddCaseForm({ close }) {
     staffLink: "",
     description: "",
     status: "Open",
-  });
-  const [errors, setErrors] = useState({});
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const validationErrors = {};
-
-    if (formData.caseNo.trim() === "") {
-      validationErrors.caseNo = "Please enter a Case No.";
-    }
-    if (formData.caseName.trim() === "") {
-      validationErrors.caseName = "Please enter a Case Name";
-    }
-    if (formData.caseCategory.trim() === "") {
-      validationErrors.caseCategory = "Please select case category";
-    }
-    if (formData.court.trim() === "") {
-      validationErrors.court = "Please select court";
-    }
-
-    if (formData.date.trim() === "") {
-      validationErrors.date = "Please  select a date";
-    }
-    if (formData.cityName.trim() === "") {
-      validationErrors.cityName = "Please select a city";
-    }
-    if (formData.caseGroup.trim() === "") {
-      validationErrors.caseGroup = "Please select a case group";
-    }
-    if (formData.clientName.trim() === "") {
-      validationErrors.clientName = "Please select at least one client";
-    }
-    if (formData.lawyerName.trim() === "") {
-      validationErrors.lawyerName = "Please select at least one lawyer";
-    }
-    if (formData.description.trim() === "") {
-      validationErrors.description = "Please enter some description";
-    }
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
+  function handleSubmit(values) {
     const currentDate = new Date();
     const uniqueId = currentDate.getTime();
     const newCase = {
       caseId: uniqueId,
-      ...formData,
+      ...values,
     };
-    console.log(newCase);
+
     dispatch(addCase(newCase));
     close();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <TextField
-          color="primary"
-          name="caseNo"
-          label="Case No."
-          variant="outlined"
-          error={!!errors.caseNo}
-          value={formData.caseNo}
-          onChange={handleInputChange}
-          helperText={errors.caseNo}
-          sx={{
-            width: "45%",
-          }}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-2px" } }}
-        />
-        <TextField
-          name="caseName"
-          label="Case Name"
-          variant="outlined"
-          error={!!errors.caseName}
-          value={formData.caseName}
-          onChange={handleInputChange}
-          sx={{
-            width: "45%",
-          }}
-          helperText={errors.caseName}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-2px" } }}
-        />
-      </div>
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel color={!errors.caseCategory ? "primary" : "error"}>
-            Case Category
-          </InputLabel>
-          <Select
-            label="Case Category"
-            name="caseCategory"
-            value={formData.caseCategory}
-            onChange={handleInputChange}
-            error={!!errors.caseCategory}
-          >
-            <MenuItem value="Theft">Theft</MenuItem>
-            <MenuItem value="Crime">Crime</MenuItem>
-          </Select>
-          {errors.caseCategory && (
-            <div className="text-danger">
-              <small>{errors.caseCategory}</small>
-            </div>
-          )}
-        </FormControl>
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel color="primary">Court</InputLabel>
-          <Select
-            label="Court"
-            name="court"
-            value={formData.court}
-            onChange={handleInputChange}
-            error={!!errors.court}
-          >
-            <MenuItem value="First Degree">First Degree</MenuItem>
-            <MenuItem value="Appeal">Appeal</MenuItem>
-            <MenuItem value="Supreme">Supreme</MenuItem>
-          </Select>
-          {errors.court && (
-            <div className="text-danger">
-              <small>{errors.court}</small>
-            </div>
-          )}
-        </FormControl>
-      </div>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={caseSchema}
+    >
+      {({ touched, values, errors, handleChange, handleBlur }) => (
+        <Form>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            <ModalInput
+              name="caseNo"
+              label="Case No."
+              touched={touched.caseNo}
+              value={values.caseNo}
+              error={touched.caseNo && !!errors.caseNo}
+              helperText={touched.caseNo && errors.caseNo}
+              onChange={handleChange}
+            />
+            <ModalInput
+              name="caseName"
+              label="Case Name"
+              touched={touched.caseName}
+              error={touched.caseName && !!errors.caseName}
+              value={values.caseName}
+              onChange={handleChange}
+              helperText={touched.caseName && errors.caseName}
+            />
+          </div>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            {SelectItem(
+              "caseCategory",
+              "Case Category",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Theft", "Crime"]
+            )}
 
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <TextField
-          label="Issue Date"
-          value={formData.date}
-          onChange={handleInputChange}
-          name="date"
-          type="date"
-          variant="outlined"
-          error={!!errors.date}
-          helperText={errors.date}
-          sx={{
-            width: "45%",
-          }}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-2px" } }}
-          InputLabelProps={{ shrink: true }}
-          inputProps={{ placeholder: "" }}
-        />
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel color="primary">City Name</InputLabel>
-          <Select
-            label="City Name"
-            name="cityName"
-            error={!!errors.cityName}
-            value={formData.cityName}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="Ahmedabad">Ahmedabad</MenuItem>
-            <MenuItem value="Gandhinagar">Gandhinagar</MenuItem>
-          </Select>
-          {errors.cityName && (
-            <div className="text-danger">
-              <small>{errors.cityName}</small>
-            </div>
-          )}
-        </FormControl>
-      </div>
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel color="primary">Case Group</InputLabel>
-          <Select
-            label="Case Group"
-            name="caseGroup"
-            value={formData.caseGroup}
-            onChange={handleInputChange}
-            error={!!errors.caseGroup}
-          >
-            <MenuItem value="Individual">Individual</MenuItem>
-            <MenuItem value="Company">Company</MenuItem>
-          </Select>
-          {errors.caseGroup && (
-            <div className="text-danger">
-              <small>{errors.caseGroup}</small>
-            </div>
-          )}
-        </FormControl>
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel color="primary">Client Name</InputLabel>
-          <Select
-            label="Client Name"
-            name="clientName"
-            value={formData.clientName}
-            onChange={handleInputChange}
-            error={!!errors.clientName}
-          >
-            <MenuItem value="Client 1">Client 1</MenuItem>
-            <MenuItem value="Client 2">Client 2</MenuItem>
-          </Select>
-          {errors.clientName && (
-            <div className="text-danger">
-              <small>{errors.clientName}</small>
-            </div>
-          )}
-        </FormControl>
-      </div>
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel>Lawyer Name</InputLabel>
-          <Select
-            label="Lawyer Name"
-            name="lawyerName"
-            value={formData.lawyerName}
-            onChange={handleInputChange}
-            error={!!errors.lawyerName}
-            o
-          >
-            <MenuItem value="lawyer 1">lawyer 1</MenuItem>
-            <MenuItem value="lawyer 2">lawyer 2</MenuItem>
-          </Select>
-          {errors.lawyerName && (
-            <div className="text-danger">
-              <small>{errors.lawyerName}</small>
-            </div>
-          )}
-        </FormControl>
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel>Staff Link</InputLabel>
-          <Select
-            label="Staff Link"
-            name="staffLink"
-            value={formData.staffLink}
-            onChange={handleInputChange}
-          >
-            <MenuItem value="Staff 1">Staff 1</MenuItem>
-            <MenuItem value="Staff 2">Staff 2</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-      <div className="m-3 d-flex flex-row justify-content-start">
-        <TextField
-          name="description"
-          label="Description"
-          variant="outlined"
-          multiline
-          minRows={4}
-          fullWidth
-          className="mx-3"
-          value={formData.description}
-          onChange={handleInputChange}
-          error={!!errors.description}
-          helperText={errors.description}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-2px" } }}
-        />
-      </div>
+            {SelectItem(
+              "court",
+              "Court",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["First Degree", "Appeal", "Supreme"]
+            )}
+          </div>
 
-      <div className="d-flex flex-row justify-content-center">
-        <button
-          type="submit"
-          className="btn btn-lg rounded-pill m-3 fs-6"
-          style={{ backgroundColor: "#502cb7", color: "white" }}
-        >
-          Submit
-        </button>
-      </div>
-    </form>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            <ModalInput
+              label="Issue Date"
+              value={values.date}
+              onChange={handleChange}
+              name="date"
+              type="date"
+              variant="outlined"
+              error={touched.date && !!errors.date}
+              touched={touched.date}
+              onBlur={handleBlur}
+              helperText={touched.date && errors.date}
+              sx={{
+                width: "45%",
+              }}
+              FormHelperTextProps={{
+                sx: { fontSize: "14px", marginLeft: "0px" },
+              }}
+            />
+            {SelectItem(
+              "cityName",
+              "City Name",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Ahmedabad", "Gandhinagar"]
+            )}
+          </div>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            {SelectItem(
+              "caseGroup",
+              "Case Group",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Individual", "Company"]
+            )}
+            {SelectItem(
+              "clientName",
+              "Client Name",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Client 1", "Client 2"]
+            )}
+          </div>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            {SelectItem(
+              "lawyerName",
+              "Lawyer Name",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Lawyer 1", "Lawyer 2"]
+            )}
+
+            {SelectItem(
+              "staffLink",
+              "Staff Link",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Staff 1", "Staff 2"]
+            )}
+          </div>
+          <div className="m-3 d-flex flex-row justify-content-start">
+            <TextField
+              name="description"
+              label="Description"
+              variant="outlined"
+              className="mx-3"
+              value={values.description}
+              onChange={handleChange}
+              error={touched.description && !!errors.description}
+              helperText={touched.description && errors.description}
+              touched={touched.description}
+              multiline
+              minRows={4}
+              fullWidth
+              FormHelperTextProps={{
+                sx: { fontSize: "14px", marginLeft: "0px" },
+              }}
+            />
+          </div>
+
+          <div className="d-flex flex-row justify-content-center">
+            <Button type="submit" label="Submit"></Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }

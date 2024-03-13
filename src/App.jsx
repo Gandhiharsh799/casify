@@ -1,22 +1,10 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import {  RouterProvider } from 'react-router-dom'
 import './App.css'
-import RootLayout from './pages/Root'
-import Landing from './components/Landing'
-import Login from './pages/Login'
-import ReportLayout from './pages/Report'
-import Dashboard from './components/Dashboard'
-import Cases from './components/Cases'
-import Register from './pages/Register'
+import router from './theme/router'
 import { createTheme, ThemeProvider } from '@mui/material'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
-import Setting from './components/Setting'
-import UserProfile from './components/UserProfile'
-import Services from './components/Services'
-import ServiceDetails from './components/ServiceDetails'
-import ServiceList from './components/ServiceList'
-import CaseList from './components/CaseList'
-import CaseDetails from './components/CaseDetails'
+
 
 
 const theme = createTheme({
@@ -31,75 +19,6 @@ const theme = createTheme({
 });
 
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <Landing />,
-      },
-    ],
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: 'signup',
-    element: <Register/>
-  },
-  {
-    path: "report",
-    element: <ReportLayout />,
-    children: [
-      {
-        path: "dashboard",
-        element :<Dashboard/>
-        
-      },
-      {
-        path: 'cases',
-        element: <Cases/>,
-        children: [
-          {
-            index: true,
-            element:<CaseList/>
-          },
-          {
-            path:'/report/cases/:caseId',
-            element: <CaseDetails/>
-          }
-        ]
-      },
-      {
-        path: 'services',
-        element: <Services/>,
-        children:[
-          {
-            index: true,
-            element:<ServiceList/>,
-          },
-          {
-            path: '/report/services/:id',
-            element: <ServiceDetails />
-          },
-        ],
-      },
-      {
-        path: 'setting',
-        element: <Setting />,
-        children: [
-          {
-            path : 'userprofile',
-            element: <UserProfile />
-          }
-        ]
-      }
-    ],
-  },
-]);
 
 function App() {
 

@@ -4,9 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import {
   Select,
   MenuItem,
@@ -16,70 +14,63 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  Table
+  Table,
+  TextField,
 } from "@mui/material";
 import { useRef } from "react";
 import Modal from "../UI/Modal";
-import styled from "@emotion/styled";
-import '../index.css'
+import StyledRow from "../theme/theme";
+import "../index.css";
 import { useNavigate } from "react-router-dom";
+import Button from "../UI/Button";
+
+const tableHeaders = [
+  { label: "Case No.", key: "caseNo" },
+  { label: "Case Name", key: "caseName" },
+  { label: "Case Category", key: "caseCategory" },
+  { label: "Case Stage", key: "court" },
+  { label: "City Name", key: "cityName" },
+  { label: "Client Name", key: "clientName" },
+  { label: "Lawyer Name", key: "lawyerName" },
+  { label: "Status", key: "status" },
+];
 
 export default function CaseList() {
   const cases = useSelector((state) => state.cases.cases);
+
   const dialog = useRef();
   const navigate = useNavigate();
 
   const handleModal = () => {
     dialog.current.showModal();
   };
-  const StyledRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: "white",
-    },
-    "&:nth-of-type(even)": {
-      backgroundColor: "#ece5ff",
-    },
-    "&:nth-of-type(even):hover": {
-      backgroundColor: "#dceff7",
-    },
-    "&:nth-of-type(odd):hover": {
-      backgroundColor: "#dceff7",
-    },
-  }));
+
+  const caseData = (caseItem) =>
+    tableHeaders.map((header, index) => (
+      <TableCell key={index} align="center" className="fs-6 fw-bold">
+        {caseItem[header.key]}
+      </TableCell>
+    ));
+
   return (
-    <div>
+    <>
       <Modal ref={dialog} />
-      <div className="d-flex flex-row justify-content-between">
+      <div className="d-flex flex-column flex-md-row justify-content-between">
         <div className="d-flex">
-          <FontAwesomeIcon
-            icon={faBriefcase}
-            className="py-4 ps-4 pe-3"
-            style={{ color: "#502cb7", height: "25px" }}
-          />
+          <FontAwesomeIcon icon={faBriefcase} className="py-4 ps-4 pe-3 icon" />
           <p className="mt-3 fs-3 fw-bold">Cases</p>
         </div>
         <div className="d-flex">
-          <button
-            className="btn btn-lg rounded-pill m-3 fs-6"
-            style={{ backgroundColor: "#502cb7", color: "white" }}
-            onClick={handleModal}
-          >
-            <FontAwesomeIcon icon={faPlus} className="px-1" />
-            Add Case
-          </button>
+          <Button label="Add Case" onClick={handleModal} icon={faPlus}></Button>
           <div className="search d-flex align-items-center rounded-pill px-4 my-3 me-3">
             <span className="input-group-append">
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                style={{ color: "#502bc7" }}
-              />
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="user" />
             </span>
             <input
               type="text"
               placeholder="Search..."
               name="search"
-              style={{ border: "none", outline: "none", flexGrow: "1" }}
-              className="px-2"
+              className="px-2 input"
             />
           </div>
         </div>
@@ -92,57 +83,55 @@ export default function CaseList() {
           <FontAwesomeIcon icon={faChevronRight} className="mt-2" />
         </div>
 
-        <div className="d-flex flex-row ms-3  ">
-          <FormControl
-            variant="standard"
-            sx={{ minWidth: 150 }}
-            className="ms-2"
-          >
-            <InputLabel>Case Category</InputLabel>
-            <Select color="primary" label="Age">
-              <MenuItem value="Theft">Theft</MenuItem>
-              <MenuItem value="Crime">Crime</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            variant="standard"
-            sx={{ minWidth: 150 }}
-            className="ms-3"
-          >
-            <InputLabel>Case Stage</InputLabel>
-            <Select label="Case Stage">
-              <MenuItem value="First Degree">First Degree</MenuItem>
-              <MenuItem value="Appeal">Appeal</MenuItem>
-              <MenuItem value="Supreme">Supreme</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            className="ms-3"
-            variant="standard"
-            sx={{ minWidth: 150 }}
-          >
-            <InputLabel>Case Status</InputLabel>
-            <Select label="Age">
-              <MenuItem value="Open">Open</MenuItem>
-              <MenuItem value="Close">Close</MenuItem>
-            </Select>
-          </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Start Date"
-              sx={{ width: "25%" }}
+        <div className="scrollable-container">
+          <div className="d-flex flex-row ms-3  ">
+            <FormControl
+              variant="standard"
+              sx={{ minWidth: 150 }}
+              className="ms-2"
+            >
+              <InputLabel>Case Category</InputLabel>
+              <Select color="primary" label="Age">
+                <MenuItem value="Theft">Theft</MenuItem>
+                <MenuItem value="Crime">Crime</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="standard"
+              sx={{ minWidth: 150 }}
               className="ms-3"
+            >
+              <InputLabel>Case Stage</InputLabel>
+              <Select label="Case Stage">
+                <MenuItem value="First Degree">First Degree</MenuItem>
+                <MenuItem value="Appeal">Appeal</MenuItem>
+                <MenuItem value="Supreme">Supreme</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              className="ms-3"
+              variant="standard"
+              sx={{ minWidth: 150 }}
+            >
+              <InputLabel>Case Status</InputLabel>
+              <Select label="Age">
+                <MenuItem value="Open">Open</MenuItem>
+                <MenuItem value="Close">Close</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              className="m-3"
+              label="Issue Date"
+              type="date"
+              inputProps={{ placeholder: "" }}
+              InputLabelProps={{ shrink: true }}
+              size="small"
             />
-          </LocalizationProvider>
+          </div>
         </div>
 
         <div>
-          <button
-            className="btn btn-md rounded-pill fs-6"
-            style={{ backgroundColor: "#502cb7", color: "white" }}
-          >
-            Clear All
-          </button>
+          <Button label="Clear All"></Button>
         </div>
       </div>
 
@@ -150,68 +139,28 @@ export default function CaseList() {
         <Table>
           <TableHead className="tab">
             <TableRow>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Case No.
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white" align="center">
-                Case Name
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white" align="center">
-                Case Category
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white" align="center">
-                Case Stage
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                City Name
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Client Name
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white " align="center">
-                Lawyer Name
-              </TableCell>
-              <TableCell className="fs-6 fw-bold text-white" align="center">
-                Status
-              </TableCell>
+              {tableHeaders.map((header, index) => (
+                <TableCell
+                  key={index}
+                  className="fs-6 fw-bold text-white"
+                  align="center"
+                >
+                  {header.label}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           {cases.map((cases) => (
-            <>
-              <StyledRow
-                key={cases.caseId}
-                onClick={() => navigate(`/report/cases/${cases.caseId}`)}
-                className="list"
-              >
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.caseNo}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.caseName}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.caseCategory}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.court}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.cityName}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.clientName}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.lawyerName}
-                </TableCell>
-                <TableCell align="center" className="fs-6 fw-bold">
-                  {cases.status}
-                </TableCell>
-              </StyledRow>
-            </>
+            <StyledRow
+              key={cases.caseId}
+              onClick={() => navigate(`/report/cases/${cases.caseId}`)}
+              className="list"
+            >
+              {caseData(cases)}
+            </StyledRow>
           ))}
         </Table>
       </TableContainer>
-    </div>
+    </>
   );
 }

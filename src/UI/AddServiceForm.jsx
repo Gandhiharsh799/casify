@@ -1,19 +1,17 @@
-import { useState } from "react";
-import {
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { TextField } from "@mui/material";
 import "../index.css";
 import { useDispatch } from "react-redux";
 import { addService } from "../store/serviceSlice";
+import Button from "./Button";
+import { Form, Formik } from "formik";
+import { serviceSchema } from "../schemas/serviceSchema";
+import { SelectItem } from "./SelectItem";
+import { ModalInput } from "./ModalInput";
 
 export default function AddServiceForm({ close }) {
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
+  const initialValues = {
     serviceName: "",
     serviceType: "",
     startDate: "",
@@ -22,230 +20,135 @@ export default function AddServiceForm({ close }) {
     clients: "",
     lawyers: "",
     note: "",
-  });
-
-  const [errors, setErrors] = useState({});
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const validationErrors = {};
-
-    if (formData.serviceName.trim() === "") {
-      validationErrors.serviceName = "Service Name is required ";
-    }
-    if (formData.serviceType.trim() === "") {
-      validationErrors.serviceType = "Please select service type ";
-    }
-    if (formData.startDate.trim() === "") {
-      validationErrors.startDate = "Please select service start date ";
-    }
-    if (formData.endDate.trim() === "") {
-      validationErrors.endDate = "Please select service end date ";
-    }
-    if (formData.status.trim() === "") {
-      validationErrors.status = "Status is a required field ";
-    }
-    if (formData.clients.trim() === "") {
-      validationErrors.clients = "Please select at least one client ";
-    }
-    if (formData.lawyers.trim() === "") {
-      validationErrors.lawyers = "Please select at least one lawyer ";
-    }
-    if (formData.note.trim() === "") {
-      validationErrors.note = "Note is a required field";
-    }
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
+  function handleSubmit(values) {
     const currentDate = new Date();
     const uniqueId = currentDate.getTime();
-    
 
     const newService = {
       id: uniqueId,
-      ...formData,
-    }
-    
-    console.log(newService);
-    console.log("done");
+      ...values,
+    };
+
     dispatch(addService(newService));
     close();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <TextField
-          name="serviceName"
-          label="Service Name"
-          variant="outlined"
-          sx={{
-            width: "45%",
-          }}
-          onChange={handleInputChange}
-          value={formData.serviceName}
-          error={!!errors.serviceName}
-          helperText={errors.serviceName}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-1px" } }}
-        />
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel>Type of Service</InputLabel>
-          <Select
-            label="Type of service"
-            name="serviceType"
-            value={formData.serviceType}
-            onChange={handleInputChange}
-            error={!!errors.serviceType}
-          >
-            <MenuItem value="Service 1">Service 1</MenuItem>
-            <MenuItem value="Service 2">Service 2</MenuItem>
-          </Select>
-          {errors.serviceType && (
-            <div className="text-danger">
-              <small>{errors.serviceType}</small>
-            </div>
-          )}
-        </FormControl>
-      </div>
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <TextField
-          name="startDate"
-          type="date"
-          label="Start Date"
-          variant="outlined"
-          sx={{
-            width: "45%",
-          }}
-          onChange={handleInputChange}
-          value={formData.startDate}
-          error={!!errors.startDate}
-          helperText={errors.startDate}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-1px" } }}
-          InputLabelProps={{ shrink: true }}
-          inputProps={{ placeholder: "" }}
-        />
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={serviceSchema}
+    >
+      {({ touched, errors, values, handleChange, handleBlur }) => (
+        <Form>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            <ModalInput
+              name="serviceName"
+              label="Service Name"
+              onChange={handleChange}
+              value={values.serviceName}
+              error={!!errors.serviceName}
+              helperText={touched.serviceName && errors.serviceName}
+              touched={touched.serviceName}
+            />
+            {SelectItem(
+              "serviceType",
+              "Type of service",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Service 1", "Service 2"]
+            )}
+          </div>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            <ModalInput
+              name="startDate"
+              label="Start Date"
+              type="date"
+              onChange={handleChange}
+              value={values.startDate}
+              error={!!errors.startDate}
+              helperText={touched.startDate && errors.startDate}
+              touched={touched.startDate}
+            />
 
-        <TextField
-          name="endDate"
-          type="date"
-          label="End Date"
-          variant="outlined"
-          sx={{
-            width: "45%",
-          }}
-          onChange={handleInputChange}
-          value={formData.endDate}
-          error={!!errors.endDate}
-          helperText={errors.endDate}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-1px" } }}
-          InputLabelProps={{ shrink: true }}
-          inputProps={{ placeholder: "" }}
-        />
+            <ModalInput
+              name="endDate"
+              label="End Date"
+              type="date"
+              onChange={handleChange}
+              value={values.endDate}
+              error={!!errors.endDate}
+              helperText={touched.endDate && errors.endDate}
+              touched={touched.endDate}
+            />
+          </div>
 
-        
-      </div>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            {SelectItem(
+              "status",
+              "Status",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Reviewing", "Accept", "Reject", "Close", "Completed", "Invoice"]
+            )}
+            {SelectItem(
+              "clients",
+              "Client Name",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Client 1", "Client 2"]
+            )}
+          </div>
+          <div className="m-3 d-flex flex-row justify-content-evenly">
+            <TextField
+              value={values.note}
+              onChange={handleChange}
+              name="note"
+              label="Note"
+              variant="outlined"
+              multiline
+              minRows={4}
+              fullWidth
+              sx={{
+                width: "45%",
+              }}
+              error={touched.note && !!errors.note}
+              helperText={touched.note && errors.note}
+              FormHelperTextProps={{
+                sx: { fontSize: "14px", marginLeft: "-1px" },
+              }}
+            />
 
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel>Status</InputLabel>
-          <Select
-            label="Status"
-            name="status"
-            value={formData.status}
-            onChange={handleInputChange}
-            error={!!errors.status}
-          >
-            <MenuItem value="First Degree">First Degree</MenuItem>
-            <MenuItem value="Reviewing">Reviewing</MenuItem>
-            <MenuItem value="Reject">Reject</MenuItem>
-            <MenuItem value="Close">Close</MenuItem>
-            <MenuItem value="Invoice">Invoice</MenuItem>
-          </Select>
-          {errors.status && (
-            <div className="text-danger">
-              <small>{errors.status}</small>
-            </div>
-          )}
-        </FormControl>
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel>Client Name</InputLabel>
-          <Select
-            label="Client Name"
-            name="clients"
-            value={formData.clients}
-            onChange={handleInputChange}
-            error={!!errors.clients}
-          >
-            <MenuItem value="Client 1">Client 1</MenuItem>
-            <MenuItem value="Client 2">Client 2</MenuItem>
-          </Select>
-          {errors.clients && (
-            <div className="text-danger">
-              <small>{errors.clients}</small>
-            </div>
-          )}
-        </FormControl>
-      </div>
-      <div className="m-3 d-flex flex-row justify-content-evenly">
-        <TextField
-          value={formData.note}
-          onChange={handleInputChange}
-          name="note"
-          label="Note"
-          variant="outlined"
-          multiline
-          minRows={4}
-          fullWidth
-          sx={{
-            width: "45%",
-          }}
-          error={!!errors.note}
-          helperText={errors.note}
-          FormHelperTextProps={{ sx: { fontSize: "14px", marginLeft: "-1px" } }}
-        />
+            {SelectItem(
+              "lawyers",
+              "Lawyer Name",
+              values,
+              handleChange,
+              handleBlur,
+              touched,
+              errors,
+              ["Lawyer 1", "Lawyer 2"]
+            )}
+          </div>
 
-        <FormControl variant="outlined" sx={{ width: "45%" }}>
-          <InputLabel>Lawyer Name</InputLabel>
-          <Select
-            label="lawyer name"
-            name="lawyers"
-            value={formData.lawyers}
-            onChange={handleInputChange}
-            error={!!errors.lawyers}
-          >
-            <MenuItem value="Lawyer 1">Lawyer 1</MenuItem>
-            <MenuItem value="Lawyer 2">Lawyer 2</MenuItem>
-          </Select>
-          {errors.lawyers && (
-            <div className="text-danger">
-              <small>{errors.lawyers}</small>
-            </div>
-          )}
-        </FormControl>
-      </div>
-
-      <div className="d-flex flex-row justify-content-center">
-        <button
-          type="submit"
-          className="btn btn-lg rounded-pill m-3 fs-6"
-          style={{ backgroundColor: "#502cb7", color: "white" }}
-        >
-          Submit
-        </button>
-      </div>
-    </form>
+          <div className="d-flex flex-row justify-content-center">
+            <Button type="submit" label="Submit">
+              Submit
+            </Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }
