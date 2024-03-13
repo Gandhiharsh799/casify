@@ -7,6 +7,7 @@ import { Form, Formik } from "formik";
 import { serviceSchema } from "../schemas/serviceSchema";
 import { SelectItem } from "./SelectItem";
 import { ModalInput } from "./ModalInput";
+import { getCurrentDate } from "../schemas/currentDate";
 
 export default function AddServiceForm({ close }) {
   const dispatch = useDispatch();
@@ -14,8 +15,8 @@ export default function AddServiceForm({ close }) {
   const initialValues = {
     serviceName: "",
     serviceType: "",
-    startDate: "",
-    endDate: "",
+    startDate: getCurrentDate(),
+    endDate: getCurrentDate(),
     status: "",
     clients: "",
     lawyers: "",

@@ -155,6 +155,12 @@
   white-space: nowrap;
 }
 
+.active {
+  background-color: white;
+  color: #502cb7 !important;
+  border-radius: 40px;
+}
+
 @media screen and (max-width: 768px) {
   .right-box {
     width: 100%;

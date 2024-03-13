@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   Select,
   MenuItem,
@@ -21,6 +21,7 @@ import {
 import ServiceModal from "../UI/ServiceModal";
 import StyledRow from "../theme/theme";
 import Button from "../UI/Button";
+import { getCurrentDate } from "../schemas/currentDate";
 
 const tableHeaders = [
   { label: "Service Name", key: "serviceName" },
@@ -32,9 +33,13 @@ const tableHeaders = [
   { label: "Lawyers", key: "lawyers" },
 ];
 
+
+
 export default function ServiceList() {
   const dialog = useRef();
   const navigate = useNavigate();
+
+  const [startDate, setStartDate] = useState(getCurrentDate());
 
   function handleModal() {
     dialog.current.showModal();
@@ -110,6 +115,8 @@ export default function ServiceList() {
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
+              value={startDate}
+              onChange={(event) => setStartDate(event.target.value)}
             />
 
             <TextField
@@ -119,6 +126,8 @@ export default function ServiceList() {
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
+              value={startDate}
+              onChange={(event) => setStartDate(event.target.value)}
             />
           </div>
         </div>

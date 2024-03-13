@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-
+import _debounce from "lodash.debounce";
 import {
   Select,
   MenuItem,
@@ -17,12 +17,13 @@ import {
   Table,
   TextField,
 } from "@mui/material";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "../UI/Modal";
 import StyledRow from "../theme/theme";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../UI/Button";
+import { getCurrentDate } from "../schemas/currentDate";
 
 const tableHeaders = [
   { label: "Case No.", key: "caseNo" },
@@ -38,11 +39,37 @@ const tableHeaders = [
 export default function CaseList() {
   const cases = useSelector((state) => state.cases.cases);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredCases, setFilteredCases] = useState([]);
+
   const dialog = useRef();
   const navigate = useNavigate();
 
   const handleModal = () => {
     dialog.current.showModal();
+  };
+
+  useEffect(() => {
+    const filtered = cases.filter((caseItem) =>
+      Object.values(caseItem).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setFilteredCases(filtered);
+  }, [searchQuery, cases]);
+
+  const debounceSearch = useRef(
+    _debounce((value) => {
+      setSearchQuery(value);
+    }, 500)
+  ).current;
+
+  const handleSearchChange = (event) => {
+    const { value } = event.target;
+    setSearchQuery(value);
+    debounceSearch(value);
   };
 
   const caseData = (caseItem) =>
@@ -71,6 +98,7 @@ export default function CaseList() {
               placeholder="Search..."
               name="search"
               className="px-2 input"
+              onChange={handleSearchChange}
             />
           </div>
         </div>
@@ -126,6 +154,7 @@ export default function CaseList() {
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
+              value={getCurrentDate()}
             />
           </div>
         </div>
@@ -150,7 +179,7 @@ export default function CaseList() {
               ))}
             </TableRow>
           </TableHead>
-          {cases.map((cases) => (
+          {filteredCases.map((cases) => (
             <StyledRow
               key={cases.caseId}
               onClick={() => navigate(`/report/cases/${cases.caseId}`)}

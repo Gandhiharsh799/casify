@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -56,70 +56,70 @@ export default function ReportLayout() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link
-                className="pt-3 fs-5 text-white"
-                as={Link}
+                className="pt-2 text-center mt-2"
+                as={NavLink}
                 to="/report/dashboard"
                 onClick={handleLinkClick}
               >
-                Dashboard
+                <small className="px-2 fs-5">Dashboard</small>
               </Nav.Link>
               <Nav.Link
-                className="pt-3 fs-5 text-white"
-                as={Link}
+                className="pt-2 text-center mt-2"
+                as={NavLink}
                 to="/report/cases"
                 onClick={handleLinkClick}
               >
-                Cases
+                <small className="px-2 fs-5">Cases</small>
               </Nav.Link>
               <Nav.Link
-                className="pt-3 fs-5 text-white"
-                as={Link}
+                className="pt-2 text-center mt-2"
+                as={NavLink}
                 to="/report/services"
                 onClick={handleLinkClick}
               >
-                Services
+                <small className="px-2 fs-5">Services</small>
               </Nav.Link>
               <Nav.Link
-                className="pt-3 fs-5 text-white"
-                as={Link}
+                className="pt-2 text-center mt-2"
+                as={NavLink}
                 to="/report/documents"
                 onClick={handleLinkClick}
               >
-                Documents
+                <small className="px-2 fs-5">Documents</small>
               </Nav.Link>
               <Nav.Link
-                className="pt-3 fs-5 text-white"
+                className="pt-2 text-center mt-2"
                 as={Link}
                 to="/report/tasks"
                 onClick={handleLinkClick}
               >
-                Tasks
+                <small className="px-2 fs-5">Tasks</small>
               </Nav.Link>
               <Nav.Link
-                className="pt-3 fs-5 text-white"
+                className="pt-2 text-center mt-2"
                 as={Link}
                 to="/report/events"
                 onClick={handleLinkClick}
               >
-                Events
+                <small className="px-2 fs-5">Events</small>
               </Nav.Link>
               <Nav.Link
-                className="pt-3 fs-5 text-white"
-                as={Link}
+                className="pt-2 text-center mt-2"
+                as={NavLink}
                 to="/report/invoice"
                 onClick={handleLinkClick}
               >
-                Invoice
+                <small className="px-2 fs-5">Invoice</small>
               </Nav.Link>
               <NavDropdown
                 as={Link}
                 title="Settings"
-                className="pt-2 fs-5 text-decoration-none"
+                className="pt-2 fs-5 text-decoration-none text-center"
               >
                 <NavDropdown.Item
                   as={Link}
                   to="/report/setting/userprofile"
-                  className="text-white hover fw-bold"
+                  className="text-white hover fw-bold we"
                 >
                   User Profile
                 </NavDropdown.Item>
