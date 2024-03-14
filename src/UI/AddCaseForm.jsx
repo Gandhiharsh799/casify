@@ -8,8 +8,6 @@ import { SelectItem } from "./SelectItem";
 import { ModalInput } from "./ModalInput";
 import { getCurrentDate } from "../schemas/currentDate";
 
-
-
 export default function AddCaseForm({ close }) {
   const dispatch = useDispatch();
   const initialValues = {
@@ -24,7 +22,7 @@ export default function AddCaseForm({ close }) {
     lawyerName: "",
     staffLink: "",
     description: "",
-    status: "Open",
+    status: "Close",
   };
 
   function handleSubmit(values) {

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Select,
   MenuItem,
@@ -33,18 +33,45 @@ const tableHeaders = [
   { label: "Lawyers", key: "lawyers" },
 ];
 
-
-
 export default function ServiceList() {
   const dialog = useRef();
   const navigate = useNavigate();
 
   const [startDate, setStartDate] = useState(getCurrentDate());
+  const [endDate, setEndDate] = useState(getCurrentDate());
+  const [serviceTypefilter, setServiceType] = useState("");
+  const [serviceStatusfilter, setServiceStatus] = useState("");
+
+  const [filteredServices, setFilteredServices] = useState([]);
+
+  let date;
 
   function handleModal() {
     dialog.current.showModal();
   }
   const services = useSelector((state) => state.services.services);
+
+  useEffect(() => {
+    let filtered = services.filter((service) => {
+      if (
+        (serviceTypefilter && service.serviceType !== serviceTypefilter) ||
+        (serviceStatusfilter && service.status !== serviceStatusfilter)
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+
+    setFilteredServices(filtered);
+  }, [
+    services,
+    serviceStatusfilter,
+    serviceTypefilter,
+    startDate,
+    endDate,
+    date,
+  ]);
 
   const serviceData = (serviceItem) =>
     tableHeaders.map((header, index) => (
@@ -88,9 +115,14 @@ export default function ServiceList() {
               className="ms-2"
             >
               <InputLabel>Service Type</InputLabel>
-              <Select color="primary" label="Age">
-                <MenuItem value="service1">Service 1</MenuItem>
-                <MenuItem value="service2">Service 2</MenuItem>
+              <Select
+                color="primary"
+                label="Service Type"
+                value={serviceTypefilter}
+                onChange={(event) => setServiceType(event.target.value)}
+              >
+                <MenuItem value="Service 1">Service 1</MenuItem>
+                <MenuItem value="Service 2">Service 2</MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -99,12 +131,17 @@ export default function ServiceList() {
               className="ms-3"
             >
               <InputLabel>Status</InputLabel>
-              <Select label="Case Stage">
+              <Select
+                label="Status"
+                value={serviceStatusfilter}
+                onChange={(event) => setServiceStatus(event.target.value)}
+              >
                 <MenuItem value="First Degree">First Degree</MenuItem>
                 <MenuItem value="Reviewing">Reviewing</MenuItem>
                 <MenuItem value="Reject">Reject</MenuItem>
                 <MenuItem value="Close">Close</MenuItem>
                 <MenuItem value="Invoice">Invoice</MenuItem>
+                <MenuItem value="Completed">Completed</MenuItem>
               </Select>
             </FormControl>
 
@@ -126,8 +163,8 @@ export default function ServiceList() {
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
-              value={startDate}
-              onChange={(event) => setStartDate(event.target.value)}
+              value={endDate}
+              onChange={(event) => setEndDate(event.target.value)}
             />
           </div>
         </div>
@@ -135,6 +172,12 @@ export default function ServiceList() {
         <button
           className="btn btn-md rounded-pill fs-6 my-2 mx-3"
           style={{ backgroundColor: "#502cb7", color: "white" }}
+          onClick={() => {
+            setServiceType("");
+            setServiceStatus("");
+            setStartDate(getCurrentDate());
+            setEndDate(getCurrentDate());
+          }}
         >
           Clear All
         </button>
@@ -156,8 +199,8 @@ export default function ServiceList() {
             </TableRow>
           </TableHead>
 
-          {services.map((service) => (
-            <>
+          {filteredServices.length > 0 ? (
+            filteredServices.map((service) => (
               <StyledRow
                 key={service.id}
                 onClick={() => navigate(`/report/services/${service.id}`)}
@@ -165,8 +208,12 @@ export default function ServiceList() {
               >
                 {serviceData(service)}
               </StyledRow>
-            </>
-          ))}
+            ))
+          ) : (
+            <TableRow>
+              <TableCell>No rows to show</TableCell>
+            </TableRow>
+          )}
         </Table>
       </TableContainer>
     </>
