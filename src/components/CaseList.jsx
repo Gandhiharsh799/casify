@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-
 import {
   Select,
   MenuItem,
@@ -17,18 +16,20 @@ import {
   Table,
   TextField,
 } from "@mui/material";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "../UI/Modal";
 import StyledRow from "../theme/theme";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../UI/Button";
+import useFilters from "../schemas/useFilters";
 
 const tableHeaders = [
   { label: "Case No.", key: "caseNo" },
   { label: "Case Name", key: "caseName" },
   { label: "Case Category", key: "caseCategory" },
   { label: "Case Stage", key: "court" },
+  { label: "Issue Date", key: "date" },
   { label: "City Name", key: "cityName" },
   { label: "Client Name", key: "clientName" },
   { label: "Lawyer Name", key: "lawyerName" },
@@ -36,13 +37,64 @@ const tableHeaders = [
 ];
 
 export default function CaseList() {
+  const initialValues = {
+    caseCategory: "",
+    caseStage: "",
+    caseStatus: "",
+    issueDate: "",
+  };
+
+  const [filters, updateFilter] = useFilters(initialValues);
   const cases = useSelector((state) => state.cases.cases);
+
+  const [filteredCases, setFilteredCases] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const dialog = useRef();
   const navigate = useNavigate();
 
   const handleModal = () => {
     dialog.current.showModal();
+  };
+
+  useEffect(() => {
+    const filtered = cases.filter((caseItem) => {
+      let caseFilters =
+        (filters.caseCategory &&
+          caseItem.caseCategory !== filters.caseCategory) ||
+        (filters.caseStage && caseItem.court !== filters.caseStage) ||
+        (filters.caseStatus && caseItem.status !== filters.caseStatus) ||
+        (filters.issueDate && caseItem.date !== filters.issueDate);
+      if (caseFilters) {
+        return false;
+      }
+
+      if (
+        Object.values(caseItem).some(
+          (value) =>
+            typeof value === "string" &&
+            value.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      ) {
+        return true;
+      }
+      return true;
+    });
+
+    setFilteredCases(filtered);
+  }, [cases, searchQuery, filters]);
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    updateFilter(name, value);
+  };
+
+  const handleClearAll = () => {
+    updateFilter("caseCategory", "");
+    updateFilter("caseStage", "");
+    updateFilter("caseStatus", "");
+    updateFilter("issueDate", "");
+    setSearchQuery("");
   };
 
   const caseData = (caseItem) =>
@@ -71,6 +123,8 @@ export default function CaseList() {
               placeholder="Search..."
               name="search"
               className="px-2 input"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
             />
           </div>
         </div>
@@ -91,7 +145,12 @@ export default function CaseList() {
               className="ms-2"
             >
               <InputLabel>Case Category</InputLabel>
-              <Select color="primary" label="Age">
+              <Select
+                color="primary"
+                name="caseCategory"
+                value={filters.caseCategory}
+                onChange={handleFilterChange}
+              >
                 <MenuItem value="Theft">Theft</MenuItem>
                 <MenuItem value="Crime">Crime</MenuItem>
               </Select>
@@ -102,7 +161,12 @@ export default function CaseList() {
               className="ms-3"
             >
               <InputLabel>Case Stage</InputLabel>
-              <Select label="Case Stage">
+              <Select
+                label="Case Stage"
+                name="caseStage"
+                value={filters.caseStage}
+                onChange={handleFilterChange}
+              >
                 <MenuItem value="First Degree">First Degree</MenuItem>
                 <MenuItem value="Appeal">Appeal</MenuItem>
                 <MenuItem value="Supreme">Supreme</MenuItem>
@@ -114,7 +178,12 @@ export default function CaseList() {
               sx={{ minWidth: 150 }}
             >
               <InputLabel>Case Status</InputLabel>
-              <Select label="Age">
+              <Select
+                label="Case Status"
+                name="caseStatus"
+                value={filters.caseStatus}
+                onChange={handleFilterChange}
+              >
                 <MenuItem value="Open">Open</MenuItem>
                 <MenuItem value="Close">Close</MenuItem>
               </Select>
@@ -123,15 +192,18 @@ export default function CaseList() {
               className="m-3"
               label="Issue Date"
               type="date"
+              name="issueDate"
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
+              value={filters.issueDate}
+              onChange={handleFilterChange}
             />
           </div>
         </div>
 
         <div>
-          <Button label="Clear All"></Button>
+          <Button label="Clear All" onClick={handleClearAll}></Button>
         </div>
       </div>
 
@@ -150,15 +222,22 @@ export default function CaseList() {
               ))}
             </TableRow>
           </TableHead>
-          {cases.map((cases) => (
-            <StyledRow
-              key={cases.caseId}
-              onClick={() => navigate(`/report/cases/${cases.caseId}`)}
-              className="list"
-            >
-              {caseData(cases)}
-            </StyledRow>
-          ))}
+
+          {filteredCases.length > 0 ? (
+            filteredCases.map((caseItem) => (
+              <StyledRow
+                key={caseItem.caseId}
+                onClick={() => navigate(`/report/cases/${caseItem.caseId}`)}
+                className="list"
+              >
+                {caseData(caseItem)}
+              </StyledRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell>No rows to show</TableCell>
+            </TableRow>
+          )}
         </Table>
       </TableContainer>
     </>

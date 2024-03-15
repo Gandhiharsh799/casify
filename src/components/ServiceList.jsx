@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Select,
   MenuItem,
@@ -21,6 +21,7 @@ import {
 import ServiceModal from "../UI/ServiceModal";
 import StyledRow from "../theme/theme";
 import Button from "../UI/Button";
+import useFilters from "../schemas/useFilters";
 
 const tableHeaders = [
   { label: "Service Name", key: "serviceName" },
@@ -33,13 +34,56 @@ const tableHeaders = [
 ];
 
 export default function ServiceList() {
+  const initialValues = {
+    serviceTypefilter: "",
+    serviceStatusfilter: "",
+    startDate: "",
+    endDate: "",
+  };
+
   const dialog = useRef();
   const navigate = useNavigate();
+
+  const [filters, updateFilter] = useFilters(initialValues);
+
+  const [filteredServices, setFilteredServices] = useState([]);
 
   function handleModal() {
     dialog.current.showModal();
   }
   const services = useSelector((state) => state.services.services);
+
+  useEffect(() => {
+    let filtered = services.filter((service) => {
+      let serviceFilters =
+        (filters.serviceTypefilter &&
+          service.serviceType !== filters.serviceTypefilter) ||
+        (filters.serviceStatusfilter &&
+          service.status !== filters.serviceStatusfilter) ||
+        (filters.startDate && service.startDate !== filters.startDate) ||
+        (filters.endDate && service.endDate !== filters.endDate);
+
+      if (serviceFilters) {
+        return false;
+      }
+
+      return true;
+    });
+
+    setFilteredServices(filtered);
+  }, [services, filters]);
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    updateFilter(name, value);
+  };
+
+  const handleClearAll = () => {
+    updateFilter("serviceTypefilter", "");
+    updateFilter("serviceStatusfilter", "");
+    updateFilter("startDate", "");
+    updateFilter("endDate", "");
+  };
 
   const serviceData = (serviceItem) =>
     tableHeaders.map((header, index) => (
@@ -83,9 +127,15 @@ export default function ServiceList() {
               className="ms-2"
             >
               <InputLabel>Service Type</InputLabel>
-              <Select color="primary" label="Age">
-                <MenuItem value="service1">Service 1</MenuItem>
-                <MenuItem value="service2">Service 2</MenuItem>
+              <Select
+                color="primary"
+                label="Service Type"
+                value={filters.serviceTypefilter}
+                name="serviceTypefilter"
+                onChange={handleFilterChange}
+              >
+                <MenuItem value="Service 1">Service 1</MenuItem>
+                <MenuItem value="Service 2">Service 2</MenuItem>
               </Select>
             </FormControl>
             <FormControl
@@ -94,12 +144,18 @@ export default function ServiceList() {
               className="ms-3"
             >
               <InputLabel>Status</InputLabel>
-              <Select label="Case Stage">
+              <Select
+                label="Status"
+                name="serviceStatusfilter"
+                value={filters.serviceStatusfilter}
+                onChange={handleFilterChange}
+              >
                 <MenuItem value="First Degree">First Degree</MenuItem>
                 <MenuItem value="Reviewing">Reviewing</MenuItem>
                 <MenuItem value="Reject">Reject</MenuItem>
                 <MenuItem value="Close">Close</MenuItem>
                 <MenuItem value="Invoice">Invoice</MenuItem>
+                <MenuItem value="Completed">Completed</MenuItem>
               </Select>
             </FormControl>
 
@@ -110,15 +166,21 @@ export default function ServiceList() {
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
+              name="startDate"
+              value={filters.startDate}
+              onChange={handleFilterChange}
             />
 
             <TextField
               className="m-3"
               label="End Date"
               type="date"
+              name="endDate"
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
+              value={filters.endDate}
+              onChange={handleFilterChange}
             />
           </div>
         </div>
@@ -126,6 +188,7 @@ export default function ServiceList() {
         <button
           className="btn btn-md rounded-pill fs-6 my-2 mx-3"
           style={{ backgroundColor: "#502cb7", color: "white" }}
+          onClick={handleClearAll}
         >
           Clear All
         </button>
@@ -147,8 +210,8 @@ export default function ServiceList() {
             </TableRow>
           </TableHead>
 
-          {services.map((service) => (
-            <>
+          {filteredServices.length > 0 ? (
+            filteredServices.map((service) => (
               <StyledRow
                 key={service.id}
                 onClick={() => navigate(`/report/services/${service.id}`)}
@@ -156,8 +219,12 @@ export default function ServiceList() {
               >
                 {serviceData(service)}
               </StyledRow>
-            </>
-          ))}
+            ))
+          ) : (
+            <TableRow>
+              <TableCell>No rows to show</TableCell>
+            </TableRow>
+          )}
         </Table>
       </TableContainer>
     </>

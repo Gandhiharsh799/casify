@@ -6,6 +6,7 @@ import { Form, Formik } from "formik";
 import { caseSchema } from "../schemas/caseValidationSchema";
 import { SelectItem } from "./SelectItem";
 import { ModalInput } from "./ModalInput";
+import { getCurrentDate } from "../schemas/currentDate";
 
 export default function AddCaseForm({ close }) {
   const dispatch = useDispatch();
@@ -14,14 +15,14 @@ export default function AddCaseForm({ close }) {
     caseName: "",
     caseCategory: "",
     court: "",
-    date: "",
+    date: getCurrentDate(),
     cityName: "",
     caseGroup: "",
     clientName: "",
     lawyerName: "",
     staffLink: "",
     description: "",
-    status: "Open",
+    status: "Close",
   };
 
   function handleSubmit(values) {
