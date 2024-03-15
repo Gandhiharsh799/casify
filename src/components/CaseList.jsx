@@ -22,7 +22,7 @@ import StyledRow from "../theme/theme";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../UI/Button";
-import { getCurrentDate } from "../schemas/currentDate";
+import useFilters from "../schemas/useFilters";
 
 const tableHeaders = [
   { label: "Case No.", key: "caseNo" },
@@ -37,14 +37,18 @@ const tableHeaders = [
 ];
 
 export default function CaseList() {
+  const initialValues = {
+    caseCategory: "",
+    caseStage: "",
+    caseStatus: "",
+    issueDate: "",
+  };
+
+  const [filters, updateFilter] = useFilters(initialValues);
   const cases = useSelector((state) => state.cases.cases);
 
   const [filteredCases, setFilteredCases] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [caseCategory, setCaseCategory] = useState("");
-  const [caseStage, setCaseStage] = useState("");
-  const [caseStatus, setCaseStatus] = useState("");
-  const [issueDate, setIssueDate] = useState(getCurrentDate());
 
   const dialog = useRef();
   const navigate = useNavigate();
@@ -55,32 +59,41 @@ export default function CaseList() {
 
   useEffect(() => {
     const filtered = cases.filter((caseItem) => {
-      const containSearchQuery = Object.values(caseItem).some(
-        (value) =>
-          typeof value === "string" &&
-          value.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      if (caseCategory && caseItem.caseCategory !== caseCategory) {
-        return false;
-      }
-      if (caseStage && caseItem.court !== caseStage) {
-        return false;
-      }
-      if (caseStatus && caseItem.status !== caseStatus) {
+      let caseFilters =
+        (filters.caseCategory &&
+          caseItem.caseCategory !== filters.caseCategory) ||
+        (filters.caseStage && caseItem.court !== filters.caseStage) ||
+        (filters.caseStatus && caseItem.status !== filters.caseStatus) ||
+        (filters.issueDate && caseItem.date !== filters.issueDate);
+      if (caseFilters) {
         return false;
       }
 
-      return containSearchQuery;
+      if (
+        Object.values(caseItem).some(
+          (value) =>
+            typeof value === "string" &&
+            value.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      ) {
+        return true;
+      }
+      return true;
     });
 
     setFilteredCases(filtered);
-  }, [cases, searchQuery, caseStage, caseCategory, caseStatus]);
+  }, [cases, searchQuery, filters]);
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    updateFilter(name, value);
+  };
 
   const handleClearAll = () => {
-    setCaseCategory("");
-    setCaseStage("");
-    setCaseStatus("");
-    setIssueDate(getCurrentDate());
+    updateFilter("caseCategory", "");
+    updateFilter("caseStage", "");
+    updateFilter("caseStatus", "");
+    updateFilter("issueDate", "");
     setSearchQuery("");
   };
 
@@ -135,8 +148,8 @@ export default function CaseList() {
               <Select
                 color="primary"
                 name="caseCategory"
-                value={caseCategory}
-                onChange={(e) => setCaseCategory(e.target.value)}
+                value={filters.caseCategory}
+                onChange={handleFilterChange}
               >
                 <MenuItem value="Theft">Theft</MenuItem>
                 <MenuItem value="Crime">Crime</MenuItem>
@@ -151,8 +164,8 @@ export default function CaseList() {
               <Select
                 label="Case Stage"
                 name="caseStage"
-                value={caseStage}
-                onChange={(e) => setCaseStage(e.target.value)}
+                value={filters.caseStage}
+                onChange={handleFilterChange}
               >
                 <MenuItem value="First Degree">First Degree</MenuItem>
                 <MenuItem value="Appeal">Appeal</MenuItem>
@@ -168,8 +181,8 @@ export default function CaseList() {
               <Select
                 label="Case Status"
                 name="caseStatus"
-                value={caseStatus}
-                onChange={(e) => setCaseStatus(e.target.value)}
+                value={filters.caseStatus}
+                onChange={handleFilterChange}
               >
                 <MenuItem value="Open">Open</MenuItem>
                 <MenuItem value="Close">Close</MenuItem>
@@ -183,8 +196,8 @@ export default function CaseList() {
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
-              onChange={(e) => setIssueDate(e.target.value)}
-              value={issueDate}
+              value={filters.issueDate}
+              onChange={handleFilterChange}
             />
           </div>
         </div>

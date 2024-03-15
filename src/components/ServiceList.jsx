@@ -21,7 +21,7 @@ import {
 import ServiceModal from "../UI/ServiceModal";
 import StyledRow from "../theme/theme";
 import Button from "../UI/Button";
-import { getCurrentDate } from "../schemas/currentDate";
+import useFilters from "../schemas/useFilters";
 
 const tableHeaders = [
   { label: "Service Name", key: "serviceName" },
@@ -34,17 +34,19 @@ const tableHeaders = [
 ];
 
 export default function ServiceList() {
+  const initialValues = {
+    serviceTypefilter: "",
+    serviceStatusfilter: "",
+    startDate: "",
+    endDate: "",
+  };
+
   const dialog = useRef();
   const navigate = useNavigate();
 
-  const [startDate, setStartDate] = useState(getCurrentDate());
-  const [endDate, setEndDate] = useState(getCurrentDate());
-  const [serviceTypefilter, setServiceType] = useState("");
-  const [serviceStatusfilter, setServiceStatus] = useState("");
+  const [filters, updateFilter] = useFilters(initialValues);
 
   const [filteredServices, setFilteredServices] = useState([]);
-
-  let date;
 
   function handleModal() {
     dialog.current.showModal();
@@ -53,10 +55,15 @@ export default function ServiceList() {
 
   useEffect(() => {
     let filtered = services.filter((service) => {
-      if (
-        (serviceTypefilter && service.serviceType !== serviceTypefilter) ||
-        (serviceStatusfilter && service.status !== serviceStatusfilter)
-      ) {
+      let serviceFilters =
+        (filters.serviceTypefilter &&
+          service.serviceType !== filters.serviceTypefilter) ||
+        (filters.serviceStatusfilter &&
+          service.status !== filters.serviceStatusfilter) ||
+        (filters.startDate && service.startDate !== filters.startDate) ||
+        (filters.endDate && service.endDate !== filters.endDate);
+
+      if (serviceFilters) {
         return false;
       }
 
@@ -64,14 +71,19 @@ export default function ServiceList() {
     });
 
     setFilteredServices(filtered);
-  }, [
-    services,
-    serviceStatusfilter,
-    serviceTypefilter,
-    startDate,
-    endDate,
-    date,
-  ]);
+  }, [services, filters]);
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    updateFilter(name, value);
+  };
+
+  const handleClearAll = () => {
+    updateFilter("serviceTypefilter", "");
+    updateFilter("serviceStatusfilter", "");
+    updateFilter("startDate", "");
+    updateFilter("endDate", "");
+  };
 
   const serviceData = (serviceItem) =>
     tableHeaders.map((header, index) => (
@@ -118,8 +130,9 @@ export default function ServiceList() {
               <Select
                 color="primary"
                 label="Service Type"
-                value={serviceTypefilter}
-                onChange={(event) => setServiceType(event.target.value)}
+                value={filters.serviceTypefilter}
+                name="serviceTypefilter"
+                onChange={handleFilterChange}
               >
                 <MenuItem value="Service 1">Service 1</MenuItem>
                 <MenuItem value="Service 2">Service 2</MenuItem>
@@ -133,8 +146,9 @@ export default function ServiceList() {
               <InputLabel>Status</InputLabel>
               <Select
                 label="Status"
-                value={serviceStatusfilter}
-                onChange={(event) => setServiceStatus(event.target.value)}
+                name="serviceStatusfilter"
+                value={filters.serviceStatusfilter}
+                onChange={handleFilterChange}
               >
                 <MenuItem value="First Degree">First Degree</MenuItem>
                 <MenuItem value="Reviewing">Reviewing</MenuItem>
@@ -152,19 +166,21 @@ export default function ServiceList() {
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
-              value={startDate}
-              onChange={(event) => setStartDate(event.target.value)}
+              name="startDate"
+              value={filters.startDate}
+              onChange={handleFilterChange}
             />
 
             <TextField
               className="m-3"
               label="End Date"
               type="date"
+              name="endDate"
               inputProps={{ placeholder: "" }}
               InputLabelProps={{ shrink: true }}
               size="small"
-              value={endDate}
-              onChange={(event) => setEndDate(event.target.value)}
+              value={filters.endDate}
+              onChange={handleFilterChange}
             />
           </div>
         </div>
@@ -172,12 +188,7 @@ export default function ServiceList() {
         <button
           className="btn btn-md rounded-pill fs-6 my-2 mx-3"
           style={{ backgroundColor: "#502cb7", color: "white" }}
-          onClick={() => {
-            setServiceType("");
-            setServiceStatus("");
-            setStartDate(getCurrentDate());
-            setEndDate(getCurrentDate());
-          }}
+          onClick={handleClearAll}
         >
           Clear All
         </button>
