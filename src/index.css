@@ -74,7 +74,10 @@
 
 .drop {
   background-color: #6f4dcc;
-  margin-left: -120px;
+}
+
+.dropdown-toggle::after {
+  color: white;
 }
 .hover:hover {
   background-color: #886bd6;
@@ -187,5 +190,10 @@
 @media screen and (max-width: 480px) {
   .box-area {
     width: 75%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .d {
+    margin: 0px auto;
   }
 }

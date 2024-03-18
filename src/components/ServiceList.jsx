@@ -54,8 +54,8 @@ export default function ServiceList() {
   const services = useSelector((state) => state.services.services);
 
   useEffect(() => {
-    let filtered = services.filter((service) => {
-      let serviceFilters =
+    const filtered = services.filter((service) => {
+      const serviceFilters =
         (filters.serviceTypefilter &&
           service.serviceType !== filters.serviceTypefilter) ||
         (filters.serviceStatusfilter &&
@@ -222,7 +222,7 @@ export default function ServiceList() {
             ))
           ) : (
             <TableRow>
-              <TableCell>No rows to show</TableCell>
+              <TableCell colSpan={tableHeaders.length} align="center" className="fs-5 fw-bold">No rows to show</TableCell>
             </TableRow>
           )}
         </Table>

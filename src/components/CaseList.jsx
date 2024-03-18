@@ -59,26 +59,26 @@ export default function CaseList() {
 
   useEffect(() => {
     const filtered = cases.filter((caseItem) => {
-      let caseFilters =
+      const caseFilters =
         (filters.caseCategory &&
           caseItem.caseCategory !== filters.caseCategory) ||
         (filters.caseStage && caseItem.court !== filters.caseStage) ||
         (filters.caseStatus && caseItem.status !== filters.caseStatus) ||
-        (filters.issueDate && caseItem.date !== filters.issueDate);
+        (filters.issueDate && caseItem.issueDate !== filters.issueDate);
       if (caseFilters) {
         return false;
       }
 
-      if (
-        Object.values(caseItem).some(
-          (value) =>
-            typeof value === "string" &&
-            value.toLowerCase().includes(searchQuery.toLowerCase())
-        )
-      ) {
+      const searchFilter = Object.values(caseItem).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      if (searchFilter) {
         return true;
       }
-      return true;
+
+      return caseFilters && searchFilter;
     });
 
     setFilteredCases(filtered);
@@ -235,7 +235,13 @@ export default function CaseList() {
             ))
           ) : (
             <TableRow>
-              <TableCell>No rows to show</TableCell>
+              <TableCell
+                colSpan={tableHeaders.length}
+                align="center"
+                className="fs-5 fw-bold"
+              >
+                No rows to show
+              </TableCell>
             </TableRow>
           )}
         </Table>

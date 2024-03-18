@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { faCopyright } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +11,6 @@ import { Navbar, NavDropdown, Nav } from "react-bootstrap";
 import { useState } from "react";
 
 export default function ReportLayout() {
-  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
 
   const handleToggle = () => {
@@ -21,14 +20,6 @@ export default function ReportLayout() {
   const handleLinkClick = () => {
     setExpanded(false);
   };
-
-  function handleNavigate() {
-    navigate("/login");
-  }
-
-  function handleNavigateUser() {
-    navigate("/report/setting/userprofile");
-  }
 
   return (
     <>
@@ -141,44 +132,38 @@ export default function ReportLayout() {
             </Nav>
           </Navbar.Collapse>
 
-          <Link
-            className="dropdown"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
+          <NavDropdown
+            as={Link}
+            title={
+              <FontAwesomeIcon
+                icon={faUser}
+                style={{
+                  height: "30px",
+                  color: "white",
+                  cursor: "pointer",
+                }}
+              />
+            }
+            align="end"
+            className="d pt-2"
           >
-            <FontAwesomeIcon
-              icon={faUser}
-              style={{
-                height: "30px",
-                color: "white",
-                cursor: "pointer",
-              }}
-            />
-            <ul className="dropdown-menu drop">
-              <li>
-                <button
-                  className="dropdown-item text-white hover fw-bold"
-                  onClick={handleNavigate}
-                >
-                  <FontAwesomeIcon
-                    className="px-2 "
-                    icon={faRightFromBracket}
-                  />
-                  Logout
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={handleNavigateUser}
-                  className="dropdown-item text-white hover fw-bold"
-                >
-                  <FontAwesomeIcon className="px-2 " icon={faUser} />
-                  User Profile
-                </button>
-              </li>
-            </ul>
-          </Link>
+            <NavDropdown.Item
+              as={Link}
+              to="/report/setting/userprofile"
+              className="text-white hover fw-bold we"
+            >
+              <FontAwesomeIcon className="pe-3 " icon={faUser} />
+              User Profile
+            </NavDropdown.Item>
+            <NavDropdown.Item
+              as={Link}
+              to="/login"
+              className="text-white hover fw-bold we"
+            >
+              <FontAwesomeIcon className="pe-3 " icon={faRightFromBracket} />
+              Logout
+            </NavDropdown.Item>
+          </NavDropdown>
         </Navbar>
       </header>
       <main className="min-vh-75">
